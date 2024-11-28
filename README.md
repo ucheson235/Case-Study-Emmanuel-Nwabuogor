@@ -99,7 +99,7 @@ Feel free to reach out for questions or collaborations!
 7. **Contributing**:
    - Provides guidelines for contributing to the project.
 
-8. **License**:
-   - Includes a placeholder for licensing details.
+Web-links :  https://ucheson235.github.io/Case-Study-Emmanuel-Nwabuogor/
+
 
 Copy and paste this content into your `README.md` file for a professional and comprehensive project overview. Let me know if you need further assistance!
