@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Average Satisfaction Ratings by Subscription Plan</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				text-align: center;
+				margin: 0;
+				padding: 20px;
+			}
+
+			#pivot-table-container {
+				margin: 30px auto;
+				width: 80%;
+				text-align: left;
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin: 20px 0;
+			}
+
+			th,
+			td {
+				padding: 10px;
+				text-align: center;
+				border: 1px solid #ddd;
+			}
+
+			th {
+				background-color: rgba(255, 205, 86, 0.8);
+			}
+
+			#analysis {
+				margin: 30px auto;
+				width: 80%;
+				text-align: left;
+				font-size: 1.1rem;
+			}
+
+			h1,
+			h2 {
+				color: #333;
+			}
+
+			p {
+				margin: 10px 0;
+			}
+			/* Navigation bar styles */
+			nav {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				background-color: #f4d03f;
+				padding: 10px 20px;
+				color: #fff;
+			}
+
+			nav img {
+				height: 50px;
+				width: auto;
+			}
+
+			nav ul {
+				list-style: none;
+				display: flex;
+				margin: 0;
+				padding: 0;
+			}
+
+			nav ul li {
+				margin: 0 15px;
+			}
+
+			nav ul li a {
+				text-decoration: none;
+				color: black;
+				font-size: 1rem;
+				transition: color 0.3s ease;
+			}
+
+			nav ul li a:hover {
+				color: #f4d03f;
+				background-color: black;
+				padding: 10px 20px;
+				border-radius: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<a href="./index.html"
+				><img
+					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+					alt="Sun King Logo"
+			/></a>
+			<ul>
+				<li><a href="./index.html">Home</a></li>
+				<li><a href="./group_analysis.html">Customer Group Analysis</a></li>
+				<li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
+				<li>
+					<a href="./customer_satisfaction_by_region.html"
+						>Satisfaction by Region</a
+					>
+				</li>
+				<li>
+					<a href="./pivot_table_subscription_plan.html">Subscription Plan</a>
+				</li>
+				<li><a href="./late_payments_by_region.html">Late Payments</a></li>
+				<li>
+					<a href="./feedback_distribution.html">Feedback Distribution</a>
+				</li>
+				<li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
+			</ul>
+		</nav>
+		<h1>Pivot Table: Average Satisfaction Ratings by Subscription Plan</h1>
+
+		<!-- Pivot Table -->
+		<div id="pivot-table-container">
+			<table id="pivot-table">
+				<thead>
+					<tr>
+						<th>Region</th>
+						<th>Basic</th>
+						<th>Standard</th>
+						<th>Premium</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Table rows will be dynamically generated -->
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Analysis Section -->
+		<div id="analysis">
+			<h2>Conclusion</h2>
+			<p>
+				The data shows that customers subscribing to the Premium plan tend to
+				have the highest satisfaction ratings across all regions, followed by
+				Standard and Basic plans. Rural regions generally have slightly lower
+				satisfaction ratings compared to Urban and Semi-Urban regions.
+			</p>
+
+			<h2>Recommendations</h2>
+			<p>
+				1. Focus on Premium Plans: Promote the Premium subscription plan as it
+				delivers the highest satisfaction ratings. Highlight its benefits to
+				customers in marketing campaigns.
+			</p>
+			<p>
+				2. Improve Basic Plan Satisfaction: Investigate the reasons for lower
+				satisfaction ratings in the Basic plan and address gaps by enhancing
+				features or offering better value.
+			</p>
+			<p>
+				3. Region-Specific Strategies: Tailor subscription features or offers to
+				address the specific needs of Rural regions, as their satisfaction
+				levels are generally lower.
+			</p>
+			<p>
+				4. Encourage Upgrades: Provide incentives for customers on Basic or
+				Standard plans to upgrade to Premium to increase satisfaction and
+				revenue.
+			</p>
+		</div>
+		<footer
+			style="
+				background-color: #f4d03f;
+				padding: 20px 0;
+				text-align: center;
+				color: #333;
+				font-family: Arial, sans-serif;
+				position: relative;
+				bottom: 0;
+				width: 100%;
+				box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+			"
+		>
+			<a href="./index.html">
+				<img
+					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+					alt="Sun King Logo"
+					style="height: 50px; width: auto"
+				/>
+			</a>
+			<p style="margin-top: 10px; font-size: 14px">
+				&copy; 2024 Sun King. All rights reserved. |
+				<a
+					href="./privacy-policy.html"
+					style="color: #333; text-decoration: underline"
+					>Privacy Policy</a
+				>
+			</p>
+		</footer>
+
+		<script>
+			// Mock data: Average satisfaction ratings by subscription plan and region
+			const avgSatisfactionByPlan = {
+				Urban: { Basic: 7.5, Standard: 8.2, Premium: 9.0 },
+				"Semi-Urban": { Basic: 6.9, Standard: 7.5, Premium: 8.3 },
+				Rural: { Basic: 6.8, Standard: 7.2, Premium: 8.0 },
+			};
+
+			// Populate Pivot Table
+			const pivotTableBody = document.querySelector("#pivot-table tbody");
+			Object.entries(avgSatisfactionByPlan).forEach(([region, plans]) => {
+				const row = document.createElement("tr");
+				row.innerHTML = `
+        <td>${region}</td>
+        <td>${plans.Basic.toFixed(1)}</td>
+        <td>${plans.Standard.toFixed(1)}</td>
+        <td>${plans.Premium.toFixed(1)}</td>
+      `;
+				pivotTableBody.appendChild(row);
+			});
+		</script>
+	</body>
+</html>

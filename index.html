@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Case Study</title>
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+		/>
+		<style>
+			/* General styles */
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #f9f9f9;
+				color: #333;
+			}
+
+			h1,
+			h2,
+			h3,
+			h4 {
+				color: #333;
+			}
+
+			a {
+				text-decoration: none;
+			}
+
+			/* Navigation bar styles */
+			nav {
+				display: flex;
+				position: fixed;
+				top: 0;
+				z-index: 1;
+				width: 100%;
+				align-items: center;
+				justify-content: space-between;
+				background-color: #f4d03f;
+				padding: 10px 20px;
+				box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+			}
+
+			nav img {
+				height: 50px;
+				width: auto;
+			}
+
+			nav ul {
+				list-style: none;
+				display: flex;
+				margin: 0;
+				padding: 0;
+			}
+
+			nav ul li {
+				margin: 0 15px;
+			}
+
+			nav ul li a {
+				text-decoration: none;
+				color: black;
+				font-size: 1rem;
+				padding: 5px 10px;
+				transition: all 0.3s ease;
+			}
+
+			nav ul li a:hover {
+				color: #f4d03f;
+				background-color: black;
+				border-radius: 50px;
+			}
+
+			/* Hero section styles */
+			.hero {
+				text-align: center;
+				margin-top: 100px;
+				padding: 20px;
+				font-family: Arial, sans-serif;
+				background-color: #fff;
+				box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			.hero h1 {
+				font-size: 2rem;
+				margin-bottom: 10px;
+			}
+
+			.hero h2 {
+				font-size: 1.5rem;
+				color: #555;
+			}
+
+			.hero h3 {
+				font-size: 1.2rem;
+				color: #777;
+			}
+
+			/* Abstract section */
+			.abstract {
+				text-align: center;
+				max-width: 800px;
+				margin: 20px auto;
+				padding: 20px;
+				font-size: 18px;
+				background-color: #fff;
+				border-radius: 8px;
+				box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			/* Table of Contents */
+			#table-of-contents {
+				font-family: Arial, sans-serif;
+				border: none;
+				border-radius: 8px;
+				padding: 20px;
+				max-width: 800px;
+				margin: 20px auto;
+				background-color: #fff;
+				box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			#table-of-contents h2 {
+				text-align: center;
+				color: black;
+				font-size: 24px;
+				margin-bottom: 10px;
+			}
+
+			#table-of-contents ul {
+				list-style-type: none;
+				padding: 0;
+			}
+
+			#table-of-contents li {
+				margin: 10px 0;
+				font-size: 16px;
+				line-height: 1.6;
+			}
+
+			#table-of-contents li > ul {
+				margin-left: 20px;
+			}
+
+			#table-of-contents li > ul > li {
+				color: #555;
+			}
+
+			/* Buttons */
+			button {
+				background-color: #f4d03f;
+				color: black;
+				padding: 10px 20px;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 1rem;
+				transition: all 0.3s ease;
+			}
+
+			button:hover {
+				background-color: black;
+				color: #f4d03f;
+			}
+
+			/* Reporting Task section */
+			.Reporting-Task {
+				max-width: 1050px;
+				margin: 20px auto;
+				padding: 20px;
+			}
+
+			.Reporting-Task h2,
+			.Reporting-Task h3,
+			.Reporting-Task h4 {
+				margin: 20px 0;
+			}
+
+			.Reporting-Task a button {
+				margin-top: 10px;
+				display: block;
+			}
+
+			#Data-Storytelling-Task {
+				text-align: center;
+			}
+
+			.customer-narrative {
+				max-width: 800px;
+				margin: 20px auto;
+				padding: 20px;
+				font-family: Arial, sans-serif;
+				line-height: 1.6;
+				color: #333;
+			}
+
+			.customer-narrative h2 {
+				text-align: center;
+				color: black;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Navigation Bar -->
+		<nav>
+			<a href="./index.html">
+				<img
+					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+					alt="Sun King Logo"
+				/>
+			</a>
+			<ul>
+				<li><a href="./index.html">Home</a></li>
+				<li><a href="./group_analysis.html">Customer Group Analysis</a></li>
+				<li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
+				<li>
+					<a href="./customer_satisfaction_by_region.html"
+						>Satisfaction by Region</a
+					>
+				</li>
+				<li>
+					<a href="./pivot_table_subscription_plan.html">Subscription Plan</a>
+				</li>
+				<li><a href="./late_payments_by_region.html">Late Payments</a></li>
+				<li>
+					<a href="./feedback_distribution.html">Feedback Distribution</a>
+				</li>
+				<li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
+			</ul>
+		</nav>
+
+		<!-- Hero Section -->
+		<div class="hero">
+			<h1>Case Study - Resolution Specialist (Product Feedback and Issues)</h1>
+			<h2>
+				Topic: Optimizing Customer Satisfaction for PayGo Solar Energy Company -
+				SunKing
+			</h2>
+			<h3>Analyzed by: Nwabuogor Emmanuel</h3>
+			<h3>Technologies Used: HTML5, CSS3, JavaScript, Chart.js, Git/GitHub</h3>
+		</div>
+
+		<!-- Abstract Section -->
+		<div class="abstract">
+			<h3>Abstract</h3>
+			<p>
+				This analysis aims to provide actionable insights for improving customer
+				satisfaction, retention, and payment compliance for Sun King, a PayGo
+				Solar Energy company. By categorizing customers based on their
+				satisfaction ratings and payment behaviors, the study identifies key
+				customer groups and proposes targeted strategies to enhance operational
+				efficiency and customer loyalty.
+			</p>
+		</div>
+
+		<!-- Table of Contents -->
+		<div id="table-of-contents">
+			<h2>Table of Contents</h2>
+			<ul>
+				<li><strong>Abstract</strong></li>
+				<li><strong>Customer Group Analysis</strong></li>
+				<li><strong>Key Visualizations</strong></li>
+				<li><strong>Insights and Recommendations</strong></li>
+				<li><strong>Data Reporting</strong></li>
+				<li><strong>Conclusion</strong></li>
+			</ul>
+		</div>
+
+		<!-- Reporting Task Section -->
+		<div class="Reporting-Task">
+			<h1>Data Reporting Task</h1>
+			<h3>
+				This section provides a concise overview of the customer data, supported
+				by visual representations to highlight key insights.
+			</h3>
+
+			<div class="Customer-Group">
+				<h2>1. Customer Groups and Strategies</h2>
+				<a href="./group_analysis.html"><button>See More</button></a>
+			</div>
+
+			<div class="line-graph">
+				<h2>2. Satisfaction Ratings vs Late Payments</h2>
+				<a href="./satisfaction_trend.html"><button>See More</button></a>
+			</div>
+
+			<div class="bar-chart-average">
+				<h2>3. Average Customer Satisfaction Across Regions</h2>
+				<a href="./customer_satisfaction_by_region.html"
+					><button>See More</button></a
+				>
+			</div>
+
+			<div class="pivot-table-average">
+				<h2>4. Average Satisfaction by Subscription Plan</h2>
+				<a href="./pivot_table_subscription_plan.html"
+					><button>See More</button></a
+				>
+			</div>
+
+			<div class="late-Payments">
+				<h2>5. Total Late Payments by Region</h2>
+				<a href="./late_payments_by_region.html"><button>See More</button></a>
+			</div>
+
+			<div class="feedback-categorized">
+				<h2>6. Feedback Distribution Categories</h2>
+				<a href="./feedback_distribution.html"><button>See More</button></a>
+			</div>
+
+			<div class="ratings-distribution">
+				<h2>7. Satisfaction Ratings Distribution</h2>
+				<a href="./ratings_distribution.html"><button>See More</button></a>
+			</div>
+		</div>
+		<!-- Data Storytelling Task -->
+		<div id="Data-Storytelling-Task">
+			<h1>Data Storytelling Task</h1>
+
+			<div class="customer-narrative">
+				<h2>Customer Feedback Narrative: Jeffrey Chavez</h2>
+				<p>
+					Jeffrey Chavez, a semi-urban entrepreneur and owner of a thriving
+					grocery business, depends on his solar service system to power
+					refrigeration units, lighting, and essential equipment. Initially, the
+					platform providing solar services earned Jeffrey’s trust with its
+					intuitive booking process and seamless payment options. He rated his
+					satisfaction an impressive 9, expressing confidence in its ability to
+					meet his business needs.
+				</p>
+				<p>
+					However, recurring reliability issues began to disrupt Jeffrey's
+					operations and tarnish his perception of the platform. During a
+					particularly critical weekend with high customer traffic, Jeffrey’s
+					solar system suffered a major malfunction. Urgently needing repairs to
+					avoid losses, Jeffrey turned to the platform to schedule service.
+					Unfortunately, due to extended system downtime, his payment was
+					delayed by more than six hours.
+				</p>
+				<p>
+					This delay caused Jeffrey’s shop to lose power, leading to the
+					spoilage of perishable goods and forcing him to close early, losing
+					significant sales. Beyond the financial impact, his reputation among
+					customers suffered, with several patrons voicing concerns about his
+					shop’s reliability.
+				</p>
+				<p>
+					When Jeffrey sought assistance from the platform’s Agent Support, he
+					endured long wait times and received no actionable resolution during
+					the crisis. Frustrated and overwhelmed, Jeffrey left feedback with a
+					satisfaction rating of 2, stating,
+					<em
+						>"I trusted this platform to keep my business running, but when I
+						needed it most, it failed."</em
+					>
+				</p>
+				<p>
+					Jeffrey’s case is not unique. According to the latest dataset, 37% of
+					semi-urban business owners report similar issues with service
+					reliability. Additionally, 78 feedback entries highlighted delayed
+					repair bookings as a recurring challenge. Another 52 entries
+					specifically mentioned the lack of communication during critical
+					moments, intensifying frustration among users. For entrepreneurs like
+					Jeffrey, these failures directly threaten their livelihoods,
+					emphasizing reliability as the most critical aspect of the platform.
+				</p>
+				<p>
+					Recent feedback also reveals a growing demand for priority repair
+					options, with 65% of business users indicating they would be willing
+					to pay a premium for expedited services. This underscores a
+					significant opportunity for the platform to address a major pain point
+					while enhancing its revenue streams.
+				</p>
+				<p>
+					<strong>Takeaway:</strong> Jeffrey’s experience underscores the need
+					for the platform to prioritize service reliability and responsive
+					support. Implementing proactive measures such as real-time system
+					monitoring, priority repair services for businesses, and enhanced
+					agent availability during peak hours can rebuild trust and transform
+					the platform into an indispensable asset for entrepreneurs. Addressing
+					these gaps is essential not just for retaining existing customers but
+					also for attracting new ones in competitive semi-urban markets.
+				</p>
+			</div>
+		</div>
+
+		<div
+			class="tasks-container"
+			style="
+				max-width: 800px;
+				margin: 20px auto;
+				padding: 20px;
+				font-family: Arial, sans-serif;
+				line-height: 1.6;
+				color: #333;
+			"
+		>
+			<h2 style="text-align: center; color: black">Problem-Solving Task</h2>
+			<p>
+				<strong>Gap Identified:</strong> The dataset currently includes customer
+				demographics such as income levels but lacks detailed insights into
+				technology literacy. If this data were available, Sun King could better
+				tailor services and communications to meet the specific needs of
+				different customer segments, improving decision-making and resource
+				allocation.
+			</p>
+			<p>With this additional data, Sun King would be able to:</p>
+			<ul>
+				<li>
+					<strong>Advise Customers on Payment Options:</strong> Based on their
+					technology literacy, Sun King could recommend the most suitable
+					payment channels, such as mobile wallets for tech-savvy users or cash
+					payment points for those with limited digital access.
+				</li>
+				<li>
+					<strong>Optimize Message Delivery:</strong> Tailor communication
+					strategies by using SMS, email, or in-app notifications depending on
+					the customer's preferred mode of communication and familiarity with
+					technology.
+				</li>
+				<li>
+					<strong>Enhance Payment Channels:</strong> Suggest specific payment
+					channels based on customer behavior and accessibility, ensuring
+					smoother transactions and reducing late payments.
+				</li>
+			</ul>
+			<h2 style="text-align: center; color: black">Critical Thinking Task</h2>
+
+			<h3>1. Major Customer Issues and Immediate Improvements</h3>
+			<ul>
+				<li>
+					<strong>Service Reliability:</strong> Customers frequently report
+					system interruptions. <em>Improvement:</em> Implement proactive
+					monitoring tools to detect and address issues before they escalate.
+				</li>
+				<li>
+					<strong>Agent Availability:</strong> Long wait times for support in
+					semi-urban areas. <em>Improvement:</em> Hire and train more agents in
+					these regions to provide faster resolutions.
+				</li>
+				<li>
+					<strong>Payment Complexity:</strong> Customers in rural areas find
+					payment methods cumbersome. <em>Improvement:</em> Introduce simplified
+					payment options, such as mobile money or offline payment channels.
+				</li>
+			</ul>
+
+			<h3>2. Regional Recommendations</h3>
+			<ul>
+				<li>
+					<strong>Urban:</strong> Focus on sustaining high satisfaction through
+					loyalty programs and consistent service quality. For example, offer
+					rewards for timely payments or discounts for long-term customers.
+				</li>
+				<li>
+					<strong>Semi-Urban:</strong> Improve agent availability to address
+					rising complaints. Deploy dedicated support teams in high-traffic
+					regions and streamline support ticket systems.
+				</li>
+				<li>
+					<strong>Rural:</strong> Address frequent service interruptions by
+					investing in infrastructure upgrades and simplify payment methods to
+					accommodate less tech-savvy users.
+				</li>
+			</ul>
+		</div>
+
+		<div
+			class="conclusion-recommendations"
+			style="
+				max-width: 800px;
+				margin: 20px auto;
+				padding: 20px;
+				font-family: Arial, sans-serif;
+				line-height: 1.6;
+				color: #333;
+			"
+		>
+			<h2 style="text-align: center; color: black">
+				Overall Conclusion and Recommendations
+			</h2>
+
+			<h3>Conclusion</h3>
+			<p>
+				The analysis of Sun King’s customer feedback and operational data
+				highlights three critical areas for improvement: service reliability,
+				agent availability, and payment complexity. These issues significantly
+				impact customer satisfaction, retention, and overall business
+				performance. Customers in semi-urban and rural areas are particularly
+				affected, with recurring complaints about delayed repairs, inadequate
+				support, and inaccessible payment options.
+			</p>
+			<p>
+				Addressing these challenges through tailored strategies and leveraging
+				customer demographics and behavioral insights will be essential for
+				maintaining trust, reducing churn, and sustaining growth across diverse
+				markets.
+			</p>
+
+			<h3>Recommendations</h3>
+			<ul>
+				<li>
+					<strong>Enhance Service Reliability:</strong> Invest in real-time
+					system monitoring and proactive maintenance to minimize service
+					disruptions, particularly in rural areas where interruptions are most
+					frequent.
+				</li>
+				<li>
+					<strong>Improve Agent Availability:</strong> Expand and train support
+					teams in semi-urban and rural regions to handle higher volumes of
+					customer queries, reducing wait times and improving resolution rates.
+				</li>
+				<li>
+					<strong>Simplify Payment Methods:</strong> Introduce more accessible
+					payment channels, such as mobile money for tech-savvy users and
+					offline cash options for those with limited digital literacy.
+				</li>
+				<li>
+					<strong>Leverage Customer Data:</strong> Utilize demographic and
+					behavioral insights to:
+					<ul>
+						<li>Advise customers on the most suitable payment options.</li>
+						<li>
+							Optimize communication strategies using SMS, email, or app
+							notifications tailored to customer preferences.
+						</li>
+						<li>
+							Offer personalized recommendations to improve payment compliance
+							and reduce delays.
+						</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Introduce Loyalty Programs:</strong> Reward timely payments
+					and long-term loyalty among urban customers to sustain high
+					satisfaction and encourage repeat usage.
+				</li>
+				<li>
+					<strong>Prioritize Business Customers:</strong> Provide priority
+					repair services and dedicated support options for business owners like
+					Jeffrey Chavez, ensuring minimal disruption to their operations.
+				</li>
+			</ul>
+
+			<p>
+				Implementing these recommendations will not only address immediate
+				customer pain points but also position Sun King as a reliable and
+				customer-centric solar services platform. With a focus on enhancing
+				satisfaction across all regions, Sun King can achieve long-term success
+				and solidify its market presence.
+			</p>
+		</div>
+		<footer
+			style="
+				background-color: #f4d03f;
+				padding: 20px 0;
+				text-align: center;
+				color: #333;
+				font-family: Arial, sans-serif;
+				position: relative;
+				bottom: 0;
+				width: 100%;
+				box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+			"
+		>
+			<a href="./index.html">
+				<img
+					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+					alt="Sun King Logo"
+					style="height: 50px; width: auto"
+				/>
+			</a>
+			<p style="margin-top: 10px; font-size: 14px">
+				&copy; 2024 Sun King. All rights reserved. |
+				<a
+					href="./privacy-policy.html"
+					style="color: #333; text-decoration: underline"
+					>Privacy Policy</a
+				>
+			</p>
+		</footer>
+	</body>
+</html>

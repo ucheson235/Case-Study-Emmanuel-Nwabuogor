@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Average Customer Satisfaction Ratings Across Regions</title>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				text-align: center;
+				margin: 0;
+				padding: 20px;
+			}
+
+			#chart-container,
+			#pivot-table-container {
+				margin: 30px auto;
+				width: 50%;
+			}
+
+			canvas {
+				background: #f8f9fa;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin: 20px 0;
+			}
+
+			th,
+			td {
+				padding: 10px;
+				text-align: center;
+				border: 1px solid #ddd;
+			}
+
+			th {
+				background-color: rgba(255, 205, 86, 0.8);
+			}
+
+			#analysis {
+				margin: 30px auto;
+				width: 80%;
+				text-align: left;
+				font-size: 1.1rem;
+			}
+
+			h1,
+			h2 {
+				color: #333;
+			}
+
+			p {
+				margin: 10px 0;
+			}
+			/* Navigation bar styles */
+			nav {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				background-color: #f4d03f;
+				padding: 10px 20px;
+				color: #fff;
+			}
+
+			nav img {
+				height: 50px;
+				width: auto;
+			}
+
+			nav ul {
+				list-style: none;
+				display: flex;
+				margin: 0;
+				padding: 0;
+			}
+
+			nav ul li {
+				margin: 0 15px;
+			}
+
+			nav ul li a {
+				text-decoration: none;
+				color: black;
+				font-size: 1rem;
+				transition: color 0.3s ease;
+			}
+
+			nav ul li a:hover {
+				color: #f4d03f;
+				background-color: black;
+				padding: 10px 20px;
+				border-radius: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<a href="./index.html"
+				><img
+					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+					alt="Sun King Logo"
+			/></a>
+			<ul>
+				<li><a href="./index.html">Home</a></li>
+				<li><a href="./group_analysis.html">Customer Group Analysis</a></li>
+				<li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
+				<li>
+					<a href="./customer_satisfaction_by_region.html"
+						>Satisfaction by Region</a
+					>
+				</li>
+				<li>
+					<a href="./pivot_table_subscription_plan.html">Subscription Plan</a>
+				</li>
+				<li><a href="./late_payments_by_region.html">Late Payments</a></li>
+				<li>
+					<a href="./feedback_distribution.html">Feedback Distribution</a>
+				</li>
+				<li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
+			</ul>
+		</nav>
+		<h1>Average Customer Satisfaction Ratings Across Regions</h1>
+
+		<!-- Bar Chart -->
+		<div id="chart-container">
+			<h2>Bar Chart: Satisfaction Ratings by Region</h2>
+			<canvas id="barChart" width="600" height="400"></canvas>
+		</div>
+
+		<!-- Pivot Table -->
+		<div id="pivot-table-container">
+			<h2>Pivot Table: Satisfaction Ratings by Region</h2>
+			<table id="pivot-table">
+				<thead>
+					<tr>
+						<th>Region</th>
+						<th>Average Satisfaction Rating</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Table rows will be dynamically generated -->
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Analysis Section -->
+		<div id="analysis">
+			<h2>Conclusion</h2>
+			<p>
+				The data shows that Urban regions have the highest average satisfaction
+				ratings, followed by Semi-Urban and Rural regions. Rural regions
+				consistently show lower satisfaction levels, indicating potential
+				service gaps or unmet needs in these areas.
+			</p>
+
+			<h2>Recommendations</h2>
+			<p>
+				1. Focus on Rural Regions: Conduct detailed surveys or focus groups in
+				Rural areas to identify key drivers of dissatisfaction and address them
+				proactively.
+			</p>
+			<p>
+				2. Enhance Service Quality:Introduce targeted programs or benefits in
+				Rural regions to boost customer satisfaction.
+			</p>
+			<p>
+				3. Leverage Urban Success: Use successful practices from Urban regions
+				as a blueprint for improving customer satisfaction in other regions.
+			</p>
+			<p>
+				4. Consistent Monitoring: Regularly track satisfaction ratings across
+				all regions to identify and address issues promptly.
+			</p>
+		</div>
+
+		<footer
+			style="
+				background-color: #f4d03f;
+				padding: 20px 0;
+				text-align: center;
+				color: #333;
+				font-family: Arial, sans-serif;
+				position: relative;
+				bottom: 0;
+				width: 100%;
+				box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+			"
+		>
+			<a href="./index.html">
+				<img
+					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+					alt="Sun King Logo"
+					style="height: 50px; width: auto"
+				/>
+			</a>
+			<p style="margin-top: 10px; font-size: 14px">
+				&copy; 2024 Sun King. All rights reserved. |
+				<a
+					href="./privacy-policy.html"
+					style="color: #333; text-decoration: underline"
+					>Privacy Policy</a
+				>
+			</p>
+		</footer>
+
+		<script>
+			// Mock data: Average customer satisfaction ratings across regions
+			const avgSatisfactionByRegion = {
+				Urban: 8.5,
+				"Semi-Urban": 7.8,
+				Rural: 7.2,
+			};
+
+			// Generate Bar Chart
+			const barChartCtx = document.getElementById("barChart").getContext("2d");
+			new Chart(barChartCtx, {
+				type: "bar",
+				data: {
+					labels: Object.keys(avgSatisfactionByRegion),
+					datasets: [
+						{
+							label: "Average Satisfaction Rating",
+							data: Object.values(avgSatisfactionByRegion),
+							backgroundColor: ["#36a2eb", "#ff6384", "#cc65fe"],
+							borderColor: ["#1f78b4", "#e31a1c", "#6a3d9a"],
+							borderWidth: 1,
+						},
+					],
+				},
+				options: {
+					responsive: true,
+					plugins: {
+						legend: {
+							display: true,
+							position: "top",
+						},
+					},
+					scales: {
+						x: {
+							title: {
+								display: true,
+								text: "Regions",
+							},
+						},
+						y: {
+							beginAtZero: true,
+							title: {
+								display: true,
+								text: "Average Satisfaction Rating",
+							},
+						},
+					},
+				},
+			});
+
+			// Populate Pivot Table
+			const pivotTableBody = document.querySelector("#pivot-table tbody");
+			Object.entries(avgSatisfactionByRegion).forEach(([region, rating]) => {
+				const row = document.createElement("tr");
+				row.innerHTML = `
+        <td>${region}</td>
+        <td>${rating.toFixed(1)}</td>
+      `;
+				pivotTableBody.appendChild(row);
+			});
+		</script>
+	</body>
+</html>
