@@ -6,12 +6,69 @@
 		<title>Customer Group Analysis</title>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<style>
-			body {
-				font-family: Arial, sans-serif;
-				text-align: center;
-				margin: 0;
-				padding: 20px;
-			}
+			/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.customer-base {
+    margin-top: 120px;
+}
+
+.toggle-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f4d03f;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.toggle-nav img {
+    height: 50px;
+    width: auto;
+}
+
+.toggle-nav .toggle-menu {
+    display: none; /* Hidden by default, shown only on small screens */
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.toggle-nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.toggle-nav ul li {
+    margin: 0 10px;
+}
+
+.toggle-nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+}
+
+.toggle-nav ul li a:hover {
+    color: #f4d03f;
+    background-color: black;
+    border-radius: 50px;
+}
+
 			#chart-container {
 				width: 500px;
 				margin: 50px auto;
@@ -56,59 +113,119 @@
 				font-size: 14px;
 				color: #555;
 			}
-			/* Navigation bar styles */
-			nav {
-				display: flex;
-				position: fixed;
-				top: 0;
-				z-index: 1;
-				width: 100%;
-				align-items: center;
-				justify-content: space-between;
-				background-color: #f4d03f;
-				padding: 10px 20px;
-				box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+			
+			
+
+			@media (max-width: 1600px) {
+				.toggle-nav {
+					padding: 10px 15px; /* Adjust padding */
+				}
+
+				.toggle-nav ul {
+					flex-wrap: wrap; /* Allow items to wrap */
+					justify-content: center; /* Center items */
+				}
+
+				.toggle-nav ul li {
+					margin: 5px 10px; /* Adjust spacing */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 16px; /* Reduce font size slightly */
+				}
+
+				.toggle-nav img {
+					height: 50px; /* Reduce logo size */
+				}
+
+				.hero {
+					margin-top: 120px; /* Add space below the navbar */
+					padding: 30px; /* Increase padding */
+					font-size: 1.2rem; /* Adjust font size */
+				}
 			}
 
-			nav img {
-				height: 50px;
-				width: auto;
+			@media (min-width: 768px) and (max-width: 1000px) {
+				/* Tablet-specific styles */
+
+				.toggle-nav {
+					padding: 10px 15px; /* Adjust padding for better fit */
+				}
+
+				.toggle-nav ul {
+					flex-wrap: wrap; /* Allow items to wrap if needed */
+					justify-content: center; /* Center items horizontally */
+				}
+
+				.toggle-nav ul li {
+					margin: 5px 10px; /* Adjust spacing between items */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 16px; /* Adjust font size for better readability */
+				}
+
+				.toggle-nav img {
+					height: 50px; /* Maintain consistent logo size for tablets */
+				}
+
+				/* Hero Section for Tablets */
+				.hero {
+					margin-top: 150px; /* Increase top margin to accommodate larger navigation */
+					padding: 30px; /* Add more padding */
+				}
+
+				.hero h1 {
+					font-size: 2.5rem; /* Larger font for tablets */
+				}
+
+				.hero h2 {
+					font-size: 2rem;
+				}
 			}
 
-			nav ul {
-				list-style: none;
-				display: flex;
-				margin: 0;
-				padding: 0;
-			}
+			
+			@media (max-width: 767px) {
+    .toggle-nav .toggle-menu {
+        display: block; /* Show the toggle button on small screens */
+    }
 
-			nav ul li {
-				margin: 0 5px;
-			}
+    .toggle-nav ul {
+        flex-direction: column; /* Stack menu items vertically */
+        align-items: center;
+        background-color: #f4d03f;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        display: none; /* Initially hidden */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
 
-			nav ul li a {
-				text-decoration: none;
-				color: black;
-				font-size: 16px;
-				padding: 5px 10px;
-				transition: all 0.3s ease;
-			}
+    .toggle-nav ul.show {
+        display: flex; /* Show the menu when toggled */
+    }
 
-			nav ul li a:hover {
-				color: #f4d03f;
-				background-color: black;
-				border-radius: 50px;
-			}
+    .toggle-nav ul li {
+        margin: 10px 0; /* Add spacing between items */
+    }
+
+    .toggle-nav ul li a {
+        font-size: 18px;
+    }
+}
+
 		</style>
 	</head>
 	<body>
-		<nav>
+		<nav class="toggle-nav">
 			<a href="./index.html"
 				><img
 					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
 					alt="Sun King Logo"
 			/></a>
-			<ul>
+			<button class="toggle-menu" aria-label="Toggle Menu">☰</button>
+			<ul class="nav-menu">
 				<li><a href="./index.html">Home</a></li>
 				<li><a href="./group_analysis.html">Customer Group Analysis</a></li>
 				<li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
@@ -127,7 +244,8 @@
 				<li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
 			</ul>
 		</nav>
-		<h1>Customer Groups Based on Satisfaction and Late Payments</h1>
+
+		<h1 class="customer-base">Customer Groups Based on Satisfaction and Late Payments</h1>
 		<div id="chart-container">
 			<canvas id="groupChart" width="500" height="400"></canvas>
 		</div>
@@ -182,6 +300,14 @@
 			</p>
 		</footer>
 		<script>
+
+           const toggleButton = document.querySelector('.toggle-nav .toggle-menu');
+			const navMenu = document.querySelector('.toggle-nav ul');
+
+			toggleButton.addEventListener('click', () => {
+				navMenu.classList.toggle('show'); // Toggle the 'show' class
+				console.log(navMenu)
+			});
 			// Updated data and strategies
 			const groupData = {
 				"Satisfied and On-Time": {
@@ -269,6 +395,9 @@
       `;
 				strategyContainer.appendChild(strategyDiv);
 			});
+
+
+			
 		</script>
 	</body>
 </html>

@@ -1,95 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Satisfaction Ratings vs. Late Payments</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-    }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Satisfaction Ratings vs. Late Payments</title>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				text-align: center;
+				margin: 0;
+				padding: 20px;
+			}
 
-    #chart-container {
-      width: 30%;
-      margin: 50px auto;
-    }
+			.trend {
+			display: block;
+			margin-top: 120px; 
+}
 
-    canvas {
-      background: #f8f9fa;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-    }
+   
 
-    #pivot-table-container {
-      margin: 30px auto;
-      width: 30%;
-    }
+			#chart-container {
+				width: 30%;
+				margin: 50px auto;
+        
+			}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
+			canvas {
+				background: #f8f9fa;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+			}
 
-    th, td {
-      padding: 10px;
-      text-align: center;
-      border: 1px solid #ddd;
-    }
+			#pivot-table-container {
+				margin: 30px auto;
+				width: 30%;
+				
+			}
 
-    th {
-      background-color: rgba(255, 205, 86, 0.8);
-    }
-
-    #analysis {
-      margin: 30px auto;
-      width: 70%;
-      text-align: left;
-      font-size: 1.1rem;
-    }
-
-    h1, h2 {
-      color: #333;
-    }
-
-    p {
-      margin: 10px 0;
-    }
-    /* Navigation bar styles */
-			nav {
-				display: flex;
-				position: fixed;
-				top: 0;
-				z-index: 1;
+			table {
 				width: 100%;
+				border-collapse: collapse;
+				margin: 20px 0;
+			}
+
+			th,
+			td {
+				padding: 10px;
+				text-align: center;
+				border: 1px solid #ddd;
+			}
+
+			th {
+				background-color: rgba(255, 205, 86, 0.8);
+			}
+
+			#analysis {
+				margin: 30px auto;
+				width: 70%;
+				text-align: left;
+				font-size: 1.1rem;
+			}
+
+			h1,
+			h2 {
+				color: #333;
+			}
+
+			p {
+				margin: 10px 0;
+			}
+		
+			/* Navigation bar styles */
+			.toggle-nav {
+				display: flex;
 				align-items: center;
 				justify-content: space-between;
 				background-color: #f4d03f;
 				padding: 10px 20px;
 				box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+				position: fixed;
+				top: 0;
+				width: 100%;
+				z-index: 1;
 			}
 
-			nav img {
+			.toggle-nav img {
 				height: 50px;
 				width: auto;
 			}
 
-			nav ul {
+			.toggle-nav .toggle-menu {
+				display: none; /* Hidden on larger screens */
+				background: none;
+				border: none;
+				font-size: 24px;
+				cursor: pointer;
+			}
+
+			.toggle-nav ul {
 				list-style: none;
 				display: flex;
+				justify-content: center !important;
 				margin: 0;
 				padding: 0;
 			}
 
-			nav ul li {
-				margin: 0 5px;
+			.toggle-nav ul li {
+				margin: 0 10px;
 			}
 
-			nav ul li a {
+			.toggle-nav ul li a {
 				text-decoration: none;
 				color: black;
 				font-size: 16px;
@@ -97,145 +118,307 @@
 				transition: all 0.3s ease;
 			}
 
-			nav ul li a:hover {
+			.toggle-nav ul li a:hover {
 				color: #f4d03f;
 				background-color: black;
 				border-radius: 50px;
 			}
-    
-  </style>
-</head>
-<body>
-  <nav>
-    <a href="./index.html"><img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo"></a>
-    <ul>
-      <li><a href="./index.html">Home</a></li>
-      <li><a href="./group_analysis.html">Customer Group Analysis</a></li>
-      <li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
-      <li><a href="./customer_satisfaction_by_region.html">Satisfaction by Region</a></li>
-      <li><a href="./pivot_table_subscription_plan.html">Subscription Plan</a></li>
-      <li><a href="./late_payments_by_region.html">Late Payments</a></li>
-      <li><a href="./feedback_distribution.html">Feedback Distribution</a></li>
-      <li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
-    </ul>
-  </nav>
-  <h1>Trend: Satisfaction Ratings vs. Late Payments</h1>
 
-  <!-- Line Chart -->
-  <div id="chart-container">
-    <canvas id="lineChart" width="600" height="400"></canvas>
-  </div>
+			@media (max-width: 1600px) {
+				.toggle-nav {
+					padding: 10px 15px; /* Adjust padding */
+				}
 
-  <!-- Pivot Table -->
-  <div id="pivot-table-container">
-    <h2>Pivot Table: Satisfaction Ratings and Late Payments</h2>
-    <table id="pivot-table">
-      <thead>
-        <tr>
-          <th>Satisfaction Rating</th>
-          <th>Total Late Payments</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Table rows will be dynamically generated -->
-      </tbody>
-    </table>
-  </div>
+				.toggle-nav ul {
+					flex-wrap: wrap; /* Allow items to wrap */
+					justify-content: center; /* Center items */
+				}
 
-  <!-- Analysis Section -->
-  <div id="analysis">
-    <h2>Analysis</h2>
-    <p><strong>Conclusion:</strong> The data reveals a clear inverse relationship between satisfaction ratings and the number of late payments. As satisfaction ratings improve, late payments decrease significantly.</p>
-    <h2>Recommendations</h2>
-    <p>1. <strong>Focus on High-Satisfaction Customers:</strong> Ensure high satisfaction customers maintain loyalty by offering loyalty programs and personalized services.</p>
-    <p>2. <strong>Improve Service Quality:</strong> For customers with low satisfaction, conduct surveys to identify pain points and implement solutions promptly.</p>
-    <p>3. <strong>Incentivize Timely Payments:</strong> Offer discounts or incentives for customers who consistently pay on time to encourage behavior that aligns with higher satisfaction levels.</p>
-    <p>4. <strong>Enhance Communication:</strong> Reach out to dissatisfied customers to provide education or reminders about payment options, reducing the likelihood of late payments.</p>
-  </div>
-  <footer style="
-      background-color: #f4d03f;
-      padding: 20px 0;
-      text-align: center;
-      color: #333;
-      font-family: Arial, sans-serif;
-      position: relative;
-      bottom: 0;
-      width: 100%;
-      box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
-    ">
-  <a href="./index.html">
-    <img
-      src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
-      alt="Sun King Logo"
-      style="height: 50px; width: auto;"
-    />
-  </a>
-  <p style="margin-top: 10px; font-size: 14px;">
-    &copy; 2024 Sun King. All rights reserved. | <a href="./privacy-policy.html" style="color: #333; text-decoration: underline;">Privacy Policy</a>
-  </p>
-</footer>
+				.toggle-nav ul li {
+					margin: 5px 10px; /* Adjust spacing */
+				}
 
-  
+				.toggle-nav ul li a {
+					font-size: 16px; /* Reduce font size slightly */
+				}
 
-   
+				.toggle-nav img {
+					height: 50px; /* Reduce logo size */
+				}
 
+				.hero {
+					margin-top: 120px; /* Add space below the navbar */
+					padding: 30px; /* Increase padding */
+					font-size: 1.2rem; /* Adjust font size */
+				}
+			}
 
-  <script>
-    // Mock data: Satisfaction ratings and corresponding late payments
-    const satisfactionRatings = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const latePayments = [20, 18, 15, 13, 10, 8, 6, 4, 2, 1];
+			@media (min-width: 768px) and (max-width: 1000px) {
+				/* Tablet-specific styles */
 
-    // Generate Line Chart
-    const ctx = document.getElementById('lineChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: satisfactionRatings,
-        datasets: [{
-          label: 'Late Payments',
-          data: latePayments,
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          fill: true,
-          tension: 0.4
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'top',
-          }
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Satisfaction Ratings (1–10)'
-            }
-          },
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Number of Late Payments'
-            }
-          }
-        }
-      }
-    });
+				.toggle-nav {
+					padding: 10px 15px; /* Adjust padding for better fit */
+				}
 
-    // Populate Pivot Table
-    const pivotTableBody = document.querySelector('#pivot-table tbody');
-    satisfactionRatings.forEach((rating, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
+				.toggle-nav ul {
+					flex-wrap: wrap; /* Allow items to wrap if needed */
+					justify-content: center; /* Center items horizontally */
+				}
+
+				.toggle-nav ul li {
+					margin: 5px 10px; /* Adjust spacing between items */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 16px; /* Adjust font size for better readability */
+				}
+
+				.toggle-nav img {
+					height: 50px; /* Maintain consistent logo size for tablets */
+				}
+
+				/* Hero Section for Tablets */
+				.hero {
+					margin-top: 150px; /* Increase top margin to accommodate larger navigation */
+					padding: 30px; /* Add more padding */
+				}
+
+				.hero h1 {
+					font-size: 2.5rem; /* Larger font for tablets */
+				}
+
+				.hero h2 {
+					font-size: 2rem;
+				}
+			}
+
+			/* Mobile styles */
+			@media (max-width: 767px) {
+				.toggle-nav .toggle-menu {
+					display: block; /* Show the toggle menu button on mobile */
+				}
+
+				.toggle-nav ul {
+					flex-direction: column; /* Stack menu items vertically */
+					align-items: center;
+					background-color: #f4d03f;
+					position: absolute;
+					top: 60px;
+					right: 0;
+					width: 100%;
+					display: none; /* Initially hidden */
+					box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+					margin-bottom: 0;
+
+					transition: margin-bottom 0.3s ease; /* Smooth transition */
+				}
+				.toggle-nav ul.show {
+					display: flex; /* Show the menu when the 'show' class is added */
+				}
+
+				.toggle-nav ul li {
+					margin: 10px 0; /* Add spacing between items */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 18px;
+				}
+				.toggle-nav ul.show {
+					display: flex; /* Show the menu when toggled */
+					margin-bottom: 500px; /* Add margin when the menu is visible */
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="toggle-nav">
+			<a href="./index.html"
+				><img
+					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+					alt="Sun King Logo"
+			/></a>
+			<button class="toggle-menu" aria-label="Toggle Menu">☰</button>
+			<ul class="nav-menu">
+				<li><a href="./index.html">Home</a></li>
+				<li><a href="./group_analysis.html">Customer Group Analysis</a></li>
+				<li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
+				<li>
+					<a href="./customer_satisfaction_by_region.html"
+						>Satisfaction by Region</a
+					>
+				</li>
+				<li>
+					<a href="./pivot_table_subscription_plan.html">Subscription Plan</a>
+				</li>
+				<li><a href="./late_payments_by_region.html">Late Payments</a></li>
+				<li>
+					<a href="./feedback_distribution.html">Feedback Distribution</a>
+				</li>
+				<li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
+			</ul>
+		</nav>
+
+		 <div class="trend">
+         <h1 >Trend: Satisfaction Ratings vs. Late Payments</h1>
+
+     </div>
+
+		<!-- Line Chart -->
+		<div id="chart-container">
+			<canvas id="lineChart" width="600" height="400"></canvas>
+		</div>
+
+		<!-- Pivot Table -->
+		<div id="pivot-table-container">
+			<h2>Pivot Table: Satisfaction Ratings and Late Payments</h2>
+			<table id="pivot-table">
+				<thead>
+					<tr>
+						<th>Satisfaction Rating</th>
+						<th>Total Late Payments</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Table rows will be dynamically generated -->
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Analysis Section -->
+		<div id="analysis">
+			<h2>Analysis</h2>
+			<p>
+				<strong>Conclusion:</strong> The data reveals a clear inverse
+				relationship between satisfaction ratings and the number of late
+				payments. As satisfaction ratings improve, late payments decrease
+				significantly.
+			</p>
+			<h2>Recommendations</h2>
+			<p>
+				1. <strong>Focus on High-Satisfaction Customers:</strong> Ensure high
+				satisfaction customers maintain loyalty by offering loyalty programs and
+				personalized services.
+			</p>
+			<p>
+				2. <strong>Improve Service Quality:</strong> For customers with low
+				satisfaction, conduct surveys to identify pain points and implement
+				solutions promptly.
+			</p>
+			<p>
+				3. <strong>Incentivize Timely Payments:</strong> Offer discounts or
+				incentives for customers who consistently pay on time to encourage
+				behavior that aligns with higher satisfaction levels.
+			</p>
+			<p>
+				4. <strong>Enhance Communication:</strong> Reach out to dissatisfied
+				customers to provide education or reminders about payment options,
+				reducing the likelihood of late payments.
+			</p>
+		</div>
+		<footer
+			style="
+				background-color: #f4d03f;
+				padding: 20px 0;
+				text-align: center;
+				color: #333;
+				font-family: Arial, sans-serif;
+				position: relative;
+				bottom: 0;
+				width: 100%;
+				box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+			"
+		>
+			<a href="./index.html">
+				<img
+					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
+					alt="Sun King Logo"
+					style="height: 50px; width: auto"
+				/>
+			</a>
+			<p style="margin-top: 10px; font-size: 14px">
+				&copy; 2024 Sun King. All rights reserved. |
+				<a
+					href="./privacy-policy.html"
+					style="color: #333; text-decoration: underline"
+					>Privacy Policy</a
+				>
+			</p>
+		</footer>
+
+		<script>
+			// Mock data: Satisfaction ratings and corresponding late payments
+			const satisfactionRatings = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+			const latePayments = [20, 18, 15, 13, 10, 8, 6, 4, 2, 1];
+
+			// Generate Line Chart
+			const ctx = document.getElementById("lineChart").getContext("2d");
+			new Chart(ctx, {
+				type: "line",
+				data: {
+					labels: satisfactionRatings,
+					datasets: [
+						{
+							label: "Late Payments",
+							data: latePayments,
+							borderColor: "rgba(75, 192, 192, 1)",
+							backgroundColor: "rgba(75, 192, 192, 0.2)",
+							fill: true,
+							tension: 0.4,
+						},
+					],
+				},
+				options: {
+					responsive: true,
+					plugins: {
+						legend: {
+							display: true,
+							position: "top",
+						},
+					},
+					scales: {
+						x: {
+							title: {
+								display: true,
+								text: "Satisfaction Ratings (1–10)",
+							},
+						},
+						y: {
+							beginAtZero: true,
+							title: {
+								display: true,
+								text: "Number of Late Payments",
+							},
+						},
+					},
+				},
+			});
+
+			// Populate Pivot Table
+			const pivotTableBody = document.querySelector("#pivot-table tbody");
+			satisfactionRatings.forEach((rating, index) => {
+				const row = document.createElement("tr");
+				row.innerHTML = `
         <td>${rating}</td>
         <td>${latePayments[index]}</td>
       `;
-      pivotTableBody.appendChild(row);
-    });
-  </script>
-</body>
+				pivotTableBody.appendChild(row);
+			});
+
+      const toggleButton = document.querySelector(".toggle-nav .toggle-menu");
+			const navMenu = document.querySelector(".toggle-nav ul");
+			const heroSection = document.querySelector(".hero");
+
+			// Add a condition to check if the screen width is mobile
+			toggleButton.addEventListener("click", () => {
+				if (window.innerWidth <= 767) {
+					navMenu.classList.toggle("show"); // Toggle menu visibility
+					if (navMenu.classList.contains("show")) {
+						heroSection.style.marginTop = "500px"; // Push the hero section down
+					} else {
+						heroSection.style.marginTop = "100px"; // Reset to default
+					}
+				}
+			});
+		</script>
+	</body>
 </html>

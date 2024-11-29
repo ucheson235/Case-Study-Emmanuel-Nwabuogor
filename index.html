@@ -31,36 +31,45 @@
 			}
 
 			/* Navigation bar styles */
-			nav {
+			.toggle-nav {
 				display: flex;
-				position: fixed;
-				top: 0;
-				z-index: 1;
-				width: 100%;
 				align-items: center;
 				justify-content: space-between;
 				background-color: #f4d03f;
 				padding: 10px 20px;
 				box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+				position: fixed;
+				top: 0;
+				width: 100%;
+				z-index: 999;
 			}
 
-			nav img {
+			.toggle-nav img {
 				height: 50px;
 				width: auto;
 			}
 
-			nav ul {
+			.toggle-nav .toggle-menu {
+				display: none; /* Hidden on larger screens */
+				background: none;
+				border: none;
+				font-size: 24px;
+				cursor: pointer;
+			}
+
+			.toggle-nav ul {
 				list-style: none;
 				display: flex;
+				justify-content: center !important;
 				margin: 0;
 				padding: 0;
 			}
 
-			nav ul li {
-				margin: 0 5px;
+			.toggle-nav ul li {
+				margin: 0 10px;
 			}
 
-			nav ul li a {
+			.toggle-nav ul li a {
 				text-decoration: none;
 				color: black;
 				font-size: 16px;
@@ -68,7 +77,7 @@
 				transition: all 0.3s ease;
 			}
 
-			nav ul li a:hover {
+			.toggle-nav ul li a:hover {
 				color: #f4d03f;
 				background-color: black;
 				border-radius: 50px;
@@ -77,11 +86,12 @@
 			/* Hero section styles */
 			.hero {
 				text-align: center;
-				margin-top: 100px;
+				margin-top: 50px;
 				padding: 20px;
 				font-family: Arial, sans-serif;
 				background-color: #fff;
 				box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+				transition: margin-top 0.3s ease; /* Smooth transition */
 			}
 
 			.hero h1 {
@@ -201,18 +211,124 @@
 				text-align: center;
 				color: black;
 			}
+
+			@media (max-width: 1600px) {
+				.toggle-nav {
+					padding: 10px 15px; /* Adjust padding */
+				}
+
+				.toggle-nav ul {
+					flex-wrap: wrap; /* Allow items to wrap */
+					justify-content: center; /* Center items */
+				}
+
+				.toggle-nav ul li {
+					margin: 5px 10px; /* Adjust spacing */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 16px; /* Reduce font size slightly */
+				}
+
+				.toggle-nav img {
+					height: 50px; /* Reduce logo size */
+				}
+
+				.hero {
+					margin-top: 120px; /* Add space below the navbar */
+					padding: 30px; /* Increase padding */
+					font-size: 1.2rem; /* Adjust font size */
+				}
+			}
+
+			@media (min-width: 768px) and (max-width: 1000px) {
+				/* Tablet-specific styles */
+
+				.toggle-nav {
+					padding: 10px 15px; /* Adjust padding for better fit */
+				}
+
+				.toggle-nav ul {
+					flex-wrap: wrap; /* Allow items to wrap if needed */
+					justify-content: center; /* Center items horizontally */
+				}
+
+				.toggle-nav ul li {
+					margin: 5px 10px; /* Adjust spacing between items */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 16px; /* Adjust font size for better readability */
+				}
+
+				.toggle-nav img {
+					height: 50px; /* Maintain consistent logo size for tablets */
+				}
+
+				/* Hero Section for Tablets */
+				.hero {
+					margin-top: 150px; /* Increase top margin to accommodate larger navigation */
+					padding: 30px; /* Add more padding */
+				}
+
+				.hero h1 {
+					font-size: 2.5rem; /* Larger font for tablets */
+				}
+
+				.hero h2 {
+					font-size: 2rem;
+				}
+			}
+
+			/* Mobile styles */
+			@media (max-width: 767px) {
+				.toggle-nav .toggle-menu {
+					display: block; /* Show the toggle menu button on mobile */
+				}
+
+				.toggle-nav ul {
+					flex-direction: column; /* Stack menu items vertically */
+					align-items: center;
+					background-color: #f4d03f;
+					position: absolute;
+					top: 60px;
+					right: 0;
+					width: 100%;
+					display: none; /* Initially hidden */
+					box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+					margin-bottom: 0;
+
+					transition: margin-bottom 0.3s ease; /* Smooth transition */
+				}
+				.toggle-nav ul.show {
+					display: flex; /* Show the menu when the 'show' class is added */
+				}
+
+				.toggle-nav ul li {
+					margin: 10px 0; /* Add spacing between items */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 18px;
+				}
+				.toggle-nav ul.show {
+					display: flex; /* Show the menu when toggled */
+					margin-bottom: 500px; /* Add margin when the menu is visible */
+				}
+			}
 		</style>
 	</head>
 	<body>
 		<!-- Navigation Bar -->
-		<nav>
-			<a href="./index.html">
-				<img
+
+		<nav class="toggle-nav">
+			<a href="./index.html"
+				><img
 					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
 					alt="Sun King Logo"
-				/>
-			</a>
-			<ul>
+			/></a>
+			<button class="toggle-menu" aria-label="Toggle Menu">☰</button>
+			<ul class="nav-menu">
 				<li><a href="./index.html">Home</a></li>
 				<li><a href="./group_analysis.html">Customer Group Analysis</a></li>
 				<li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
@@ -279,16 +395,28 @@
 
 			<div class="Customer-Group">
 				<h2>1. Customer Groups and Strategies</h2>
+				<h4>
+					Here is a Summarize number of customers in each group and suggest
+					strategies to target each
+				</h4>
 				<a href="./group_analysis.html"><button>See More</button></a>
 			</div>
 
 			<div class="line-graph">
 				<h2>2. Satisfaction Ratings vs Late Payments</h2>
+				<h4>
+					A line graph showing the trend between satisfaction ratings and late
+					payments.
+				</h4>
 				<a href="./satisfaction_trend.html"><button>See More</button></a>
 			</div>
 
 			<div class="bar-chart-average">
 				<h2>3. Average Customer Satisfaction Across Regions</h2>
+				<h4>
+					A bar chart comparing average customer satisfaction ratings across
+					regions (Urban, Semi-Urban, Rural).
+				</h4>
 				<a href="./customer_satisfaction_by_region.html"
 					><button>See More</button></a
 				>
@@ -296,6 +424,10 @@
 
 			<div class="pivot-table-average">
 				<h2>4. Average Satisfaction by Subscription Plan</h2>
+				<h4>
+					A pivot table showing average satisfaction ratings by subscription
+					plan (Basic, Standard, Premium) across regions.
+				</h4>
 				<a href="./pivot_table_subscription_plan.html"
 					><button>See More</button></a
 				>
@@ -303,16 +435,27 @@
 
 			<div class="late-Payments">
 				<h2>5. Total Late Payments by Region</h2>
+				<h4>
+					Here is the total number that shows late payments per region in the
+					last six months
+				</h4>
 				<a href="./late_payments_by_region.html"><button>See More</button></a>
 			</div>
 
 			<div class="feedback-categorized">
 				<h2>6. Feedback Distribution Categories</h2>
+				<h4>
+					A pie chart showing the distribution of feedback categorized into
+					"Service Reliability," "Payment Challenges," and "Agent Support."
+				</h4>
 				<a href="./feedback_distribution.html"><button>See More</button></a>
 			</div>
 
 			<div class="ratings-distribution">
 				<h2>7. Satisfaction Ratings Distribution</h2>
+				<h4>
+					A column chart showing the distribution of satisfaction ratings (1–10)
+				</h4>
 				<a href="./ratings_distribution.html"><button>See More</button></a>
 			</div>
 		</div>
@@ -582,5 +725,22 @@
 				>
 			</p>
 		</footer>
+		<script>
+			const toggleButton = document.querySelector(".toggle-nav .toggle-menu");
+			const navMenu = document.querySelector(".toggle-nav ul");
+			const heroSection = document.querySelector(".hero");
+
+			// Add a condition to check if the screen width is mobile
+			toggleButton.addEventListener("click", () => {
+				if (window.innerWidth <= 767) {
+					navMenu.classList.toggle("show"); // Toggle menu visibility
+					if (navMenu.classList.contains("show")) {
+						heroSection.style.marginTop = "500px"; // Push the hero section down
+					} else {
+						heroSection.style.marginTop = "100px"; // Reset to default
+					}
+				}
+			});
+		</script>
 	</body>
 </html>

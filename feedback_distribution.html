@@ -58,36 +58,46 @@
 				margin: 10px 0;
 			}
 			/* Navigation bar styles */
-			nav {
+			/* Navigation bar styles */
+			.toggle-nav {
 				display: flex;
-				position: fixed;
-				top: 0;
-				z-index: 1;
-				width: 100%;
 				align-items: center;
 				justify-content: space-between;
 				background-color: #f4d03f;
 				padding: 10px 20px;
 				box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+				position: fixed;
+				top: 0;
+				width: 100%;
+				z-index: 999;
 			}
 
-			nav img {
+			.toggle-nav img {
 				height: 50px;
 				width: auto;
 			}
 
-			nav ul {
+			.toggle-nav .toggle-menu {
+				display: none; /* Hidden on larger screens */
+				background: none;
+				border: none;
+				font-size: 24px;
+				cursor: pointer;
+			}
+
+			.toggle-nav ul {
 				list-style: none;
 				display: flex;
+				justify-content: center !important;
 				margin: 0;
 				padding: 0;
 			}
 
-			nav ul li {
-				margin: 0 5px;
+			.toggle-nav ul li {
+				margin: 0 10px;
 			}
 
-			nav ul li a {
+			.toggle-nav ul li a {
 				text-decoration: none;
 				color: black;
 				font-size: 16px;
@@ -95,21 +105,127 @@
 				transition: all 0.3s ease;
 			}
 
-			nav ul li a:hover {
+			.toggle-nav ul li a:hover {
 				color: #f4d03f;
 				background-color: black;
 				border-radius: 50px;
 			}
+
+			@media (max-width: 1600px) {
+				.toggle-nav {
+					padding: 10px 15px; /* Adjust padding */
+				}
+
+				.toggle-nav ul {
+					flex-wrap: wrap; /* Allow items to wrap */
+					justify-content: center; /* Center items */
+				}
+
+				.toggle-nav ul li {
+					margin: 5px 10px; /* Adjust spacing */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 16px; /* Reduce font size slightly */
+				}
+
+				.toggle-nav img {
+					height: 50px; /* Reduce logo size */
+				}
+
+				.hero {
+					margin-top: 120px; /* Add space below the navbar */
+					padding: 30px; /* Increase padding */
+					font-size: 1.2rem; /* Adjust font size */
+				}
+			}
+
+			@media (min-width: 768px) and (max-width: 1000px) {
+				/* Tablet-specific styles */
+
+				.toggle-nav {
+					padding: 10px 15px; /* Adjust padding for better fit */
+				}
+
+				.toggle-nav ul {
+					flex-wrap: wrap; /* Allow items to wrap if needed */
+					justify-content: center; /* Center items horizontally */
+				}
+
+				.toggle-nav ul li {
+					margin: 5px 10px; /* Adjust spacing between items */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 16px; /* Adjust font size for better readability */
+				}
+
+				.toggle-nav img {
+					height: 50px; /* Maintain consistent logo size for tablets */
+				}
+
+				/* Hero Section for Tablets */
+				.hero {
+					margin-top: 150px; /* Increase top margin to accommodate larger navigation */
+					padding: 30px; /* Add more padding */
+				}
+
+				.hero h1 {
+					font-size: 2.5rem; /* Larger font for tablets */
+				}
+
+				.hero h2 {
+					font-size: 2rem;
+				}
+			}
+
+			/* Mobile styles */
+			@media (max-width: 767px) {
+				.toggle-nav .toggle-menu {
+					display: block; /* Show the toggle menu button on mobile */
+				}
+
+				.toggle-nav ul {
+					flex-direction: column; /* Stack menu items vertically */
+					align-items: center;
+					background-color: #f4d03f;
+					position: absolute;
+					top: 60px;
+					right: 0;
+					width: 100%;
+					display: none; /* Initially hidden */
+					box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+					margin-bottom: 0;
+
+					transition: margin-bottom 0.3s ease; /* Smooth transition */
+				}
+				.toggle-nav ul.show {
+					display: flex; /* Show the menu when the 'show' class is added */
+				}
+
+				.toggle-nav ul li {
+					margin: 10px 0; /* Add spacing between items */
+				}
+
+				.toggle-nav ul li a {
+					font-size: 18px;
+				}
+				.toggle-nav ul.show {
+					display: flex; /* Show the menu when toggled */
+					margin-bottom: 500px; /* Add margin when the menu is visible */
+				}
+			}
 		</style>
 	</head>
 	<body>
-		<nav>
+		<nav class="toggle-nav">
 			<a href="./index.html"
 				><img
 					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
 					alt="Sun King Logo"
 			/></a>
-			<ul>
+			<button class="toggle-menu" aria-label="Toggle Menu">☰</button>
+			<ul class="nav-menu">
 				<li><a href="./index.html">Home</a></li>
 				<li><a href="./group_analysis.html">Customer Group Analysis</a></li>
 				<li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
@@ -128,6 +244,7 @@
 				<li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
 			</ul>
 		</nav>
+
 		<h1>Feedback Distribution</h1>
 
 		<!-- Pie Chart -->
@@ -254,6 +371,23 @@
         <td>${count}</td>
       `;
 				tableBody.appendChild(row);
+			});
+
+
+			const toggleButton = document.querySelector(".toggle-nav .toggle-menu");
+			const navMenu = document.querySelector(".toggle-nav ul");
+			const heroSection = document.querySelector(".hero");
+
+			// Add a condition to check if the screen width is mobile
+			toggleButton.addEventListener("click", () => {
+				if (window.innerWidth <= 767) {
+					navMenu.classList.toggle("show"); // Toggle menu visibility
+					if (navMenu.classList.contains("show")) {
+						heroSection.style.marginTop = "500px"; // Push the hero section down
+					} else {
+						heroSection.style.marginTop = "100px"; // Reset to default
+					}
+				}
 			});
 		</script>
 	</body>
