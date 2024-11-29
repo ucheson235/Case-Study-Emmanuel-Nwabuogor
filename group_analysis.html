@@ -11,11 +11,48 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
 
         .customer-base {
-            margin-top: 120px;
+            margin-top: 100px;
+        }
+
+        #chart-container, #pivot-table-container, #strategies-container {
+            margin: 30px auto;
+            width: 70%;
+        }
+
+        canvas {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: rgba(255, 205, 86, 0.8);
+        }
+
+        .strategy h3 {
+            color: #333;
+        }
+
+        .strategy p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
         }
 
         /* Navbar Styles */
@@ -24,7 +61,7 @@
             align-items: center;
             justify-content: space-between;
             background-color: #f4d03f;
-            padding: 10px 20px;
+            padding: 10px 1px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -34,7 +71,6 @@
 
         .toggle-nav img {
             height: 50px;
-            width: auto;
         }
 
         .toggle-menu {
@@ -60,7 +96,7 @@
             text-decoration: none;
             color: black;
             font-size: 16px;
-            padding: 5px 10px;
+            padding: 5px 5px;
             transition: all 0.3s ease;
         }
 
@@ -70,64 +106,19 @@
             border-radius: 50px;
         }
 
-        /* Chart Styles */
-        #chart-container {
-            width: 500px;
-            margin: 50px auto;
+        /* Responsive Styles */
+        @media (max-width: 1600px) {
+            #chart-container, #pivot-table-container, #strategies-container {
+                width: 80%;
+            }
+
+            .nav-menu li a {
+                font-size: 14px;
+                padding: 5px;
+            }
         }
 
-        canvas {
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        /* Table Styles */
-        #pivot-table-container {
-            margin: 30px auto;
-            width: 70%;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-
-        /* Strategy Section */
-        #strategies-container {
-            margin: 40px auto;
-            width: 70%;
-        }
-
-        .strategy {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .strategy h3 {
-            margin: 10px 0 5px;
-            color: #333;
-        }
-
-        .strategy p {
-            margin: 0;
-            font-size: 14px;
-            color: #555;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 767px) {
+        @media (max-width: 900px) {
             .toggle-menu {
                 display: block;
             }
@@ -138,8 +129,8 @@
                 background-color: #f4d03f;
                 position: absolute;
                 top: 60px;
+                left: 0;
                 right: 0;
-                width: 100%;
                 display: none;
                 box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
             }
@@ -153,12 +144,36 @@
             }
 
             .nav-menu li a {
-                font-size: 18px;
+                font-size: 16px;
+            }
+
+            .customer-base {
+                margin-top: 140px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            #chart-container, #pivot-table-container, #strategies-container {
+                width: 100%;
+                padding: 0 10px;
+            }
+
+            table th, table td {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="toggle-nav">
         <a href="./index.html">
             <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo">
@@ -176,9 +191,10 @@
         </ul>
     </nav>
 
+    <!-- Main Content -->
     <h1 class="customer-base">Customer Groups Based on Satisfaction and Late Payments</h1>
     <div id="chart-container">
-        <canvas id="groupChart" width="500" height="400"></canvas>
+        <canvas id="groupChart"></canvas>
     </div>
     <div id="pivot-table-container">
         <h2>Pivot Table of Group Data</h2>
@@ -197,14 +213,16 @@
         <div id="strategy-list"></div>
     </div>
 
-    <footer style="background-color: #f4d03f; padding: 20px 0; text-align: center; color: #333; box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);">
+    <!-- Footer -->
+    <footer style="background-color: #f4d03f; padding: 20px 0; text-align: center;">
         <a href="./index.html">
             <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo" style="height: 50px;">
         </a>
-        <p>&copy; 2024 Sun King. All rights reserved. | <a href="./privacy-policy.html" style="text-decoration: underline;">Privacy Policy</a></p>
+        <p>&copy; 2024 Sun King. All rights reserved. | <a href="#" style="text-decoration: underline;">Privacy Policy</a></p>
     </footer>
 
     <script>
+        // Navbar Toggle for Mobile
         const toggleButton = document.querySelector('.toggle-menu');
         const navMenu = document.querySelector('.nav-menu');
 
@@ -212,29 +230,16 @@
             navMenu.classList.toggle('show');
         });
 
+        // Group Data
         const groupData = {
-            "Satisfied and On-Time": {
-                number: 57,
-                strategy: "Retain these customers with loyalty programs, exclusive offers, and continued excellent service."
-            },
-            "Dissatisfied and On-Time": {
-                number: 89,
-                strategy: "Conduct surveys to identify reasons for dissatisfaction and address them proactively."
-            },
-            "At Risk": {
-                number: 141,
-                strategy: "Offer personalized support and flexible payment options to improve retention."
-            },
-            "Critical Risk": {
-                number: 62,
-                strategy: "Implement immediate intervention strategies, such as personal outreach and resolving service issues."
-            },
-            "Other": {
-                number: 151,
-                strategy: "Analyze these records further to understand their categorization."
-            }
+            "Satisfied and On-Time": { number: 57, strategy: "Retain these customers with loyalty programs, exclusive offers, and continued excellent service." },
+            "Dissatisfied and On-Time": { number: 89, strategy: "Conduct surveys to identify reasons for dissatisfaction and address them proactively." },
+            "At Risk": { number: 141, strategy: "Offer personalized support and flexible payment options to improve retention." },
+            "Critical Risk": { number: 62, strategy: "Implement immediate intervention strategies, such as personal outreach and resolving service issues." },
+            "Other": { number: 151, strategy: "Analyze these records further to understand their categorization." }
         };
 
+        // Chart
         const ctx = document.getElementById("groupChart").getContext("2d");
         new Chart(ctx, {
             type: "bar",
@@ -249,16 +254,15 @@
                 }]
             },
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
             }
         });
 
+        // Populate Table
         const pivotTableBody = document.querySelector("#pivot-table tbody");
         Object.entries(groupData).forEach(([group, data]) => {
             const row = document.createElement("tr");
@@ -266,6 +270,7 @@
             pivotTableBody.appendChild(row);
         });
 
+        // Populate Strategies Section
         const strategyList = document.getElementById("strategy-list");
         Object.entries(groupData).forEach(([group, data]) => {
             const strategyDiv = document.createElement("div");

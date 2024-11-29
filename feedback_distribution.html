@@ -1,398 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Feedback Distribution</title>
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<style>
-			body {
-				font-family: Arial, sans-serif;
-				text-align: center;
-				margin: 0;
-				padding: 20px;
-			}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Distribution</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
 
-			.Distribution{
-				margin-top: 120px;
-			}
+        .Distribution {
+            margin-top: 120px;
+        }
 
-			#chart-container,
-			#table-container {
-				margin: 30px auto;
-				width: 30%;
-			}
+        #chart-container,
+        #table-container {
+            margin: 30px auto;
+            width: 50%;
+        }
 
-			canvas {
-				background: #f8f9fa;
-				border: 1px solid #ddd;
-				border-radius: 8px;
-			}
+        canvas {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
 
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				margin: 20px 0;
-			}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
 
-			th,
-			td {
-				padding: 10px;
-				text-align: center;
-				border: 1px solid #ddd;
-			}
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
 
-			th {
-				background-color: rgba(255, 205, 86, 0.8);
-			}
+        th {
+            background-color: rgba(255, 205, 86, 0.8);
+        }
 
-			#analysis {
-				margin: 30px auto;
-				width: 80%;
-				text-align: left;
-				font-size: 1.1rem;
-			}
+        #analysis {
+            margin: 30px auto;
+            width: 70%;
+            text-align: left;
+            font-size: 1.1rem;
+        }
 
-			h1,
-			h2 {
-				color: #333;
-			}
+        h1, h2 {
+            color: #333;
+        }
 
-			p {
-				margin: 10px 0;
-			}
-			/* Navigation bar styles */
-			/* Navigation bar styles */
-			.toggle-nav {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				background-color: #f4d03f;
-				padding: 10px 20px;
-				box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-				position: fixed;
-				top: 0;
-				width: 100%;
-				z-index: 999;
-			}
+        p {
+            margin: 10px 0;
+        }
 
-			.toggle-nav img {
-				height: 50px;
-				width: auto;
-			}
+        /* Navbar Styles */
+        .toggle-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f4d03f;
+            padding: 10px 1px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+        }
 
-			.toggle-nav .toggle-menu {
-				display: none; /* Hidden on larger screens */
-				background: none;
-				border: none;
-				font-size: 24px;
-				cursor: pointer;
-			}
+        .toggle-nav img {
+            height: 50px;
+        }
 
-			.toggle-nav ul {
-				list-style: none;
-				display: flex;
-				justify-content: center !important;
-				margin: 0;
-				padding: 0;
-			}
+        .toggle-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
 
-			.toggle-nav ul li {
-				margin: 0 10px;
-			}
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
 
-			.toggle-nav ul li a {
-				text-decoration: none;
-				color: black;
-				font-size: 16px;
-				padding: 5px 10px;
-				transition: all 0.3s ease;
-			}
+        .nav-menu li {
+            margin: 0 10px;
+        }
 
-			.toggle-nav ul li a:hover {
-				color: #f4d03f;
-				background-color: black;
-				border-radius: 50px;
-			}
+        .nav-menu li a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
 
-			@media (max-width: 1600px) {
-				.toggle-nav {
-					padding: 10px 15px; /* Adjust padding */
-				}
+        .nav-menu li a:hover {
+            color: #f4d03f;
+            background-color: black;
+            border-radius: 50px;
+        }
 
-				.toggle-nav ul {
-					flex-wrap: wrap; /* Allow items to wrap */
-					justify-content: center; /* Center items */
-				}
+        /* Responsive Styles */
+        @media (max-width: 1600px) {
+            #chart-container, #table-container {
+                width: 60%;
+            }
 
-				.toggle-nav ul li {
-					margin: 5px 10px; /* Adjust spacing */
-				}
+            .nav-menu li a {
+                font-size: 14px;
+            }
+        }
 
-				.toggle-nav ul li a {
-					font-size: 16px; /* Reduce font size slightly */
-				}
+        @media (max-width: 900px) {
+            .toggle-menu {
+                display: block;
+            }
 
-				.toggle-nav img {
-					height: 50px; /* Reduce logo size */
-				}
+            .nav-menu {
+                flex-direction: column;
+                align-items: center;
+                background-color: #f4d03f;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                display: none;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            }
 
-				.hero {
-					margin-top: 120px; /* Add space below the navbar */
-					padding: 30px; /* Increase padding */
-					font-size: 1.2rem; /* Adjust font size */
-				}
-			}
+            .nav-menu.show {
+                display: flex;
+            }
 
-			@media (min-width: 768px) and (max-width: 1000px) {
-				/* Tablet-specific styles */
+            .nav-menu li {
+                margin: 10px 0;
+            }
 
-				.toggle-nav {
-					padding: 10px 15px; /* Adjust padding for better fit */
-				}
+            .nav-menu li a {
+                font-size: 16px;
+            }
 
-				.toggle-nav ul {
-					flex-wrap: wrap; /* Allow items to wrap if needed */
-					justify-content: center; /* Center items horizontally */
-				}
+            .Distribution {
+                margin-top: 140px;
+            }
 
-				.toggle-nav ul li {
-					margin: 5px 10px; /* Adjust spacing between items */
-				}
+            #chart-container, #table-container {
+                width: 70%;
+            }
+        }
 
-				.toggle-nav ul li a {
-					font-size: 16px; /* Adjust font size for better readability */
-				}
+        @media (max-width: 767px) {
+            h1 {
+                font-size: 1.5rem;
+            }
 
-				.toggle-nav img {
-					height: 50px; /* Maintain consistent logo size for tablets */
-				}
+            h2 {
+                font-size: 1.2rem;
+            }
 
-				/* Hero Section for Tablets */
-				.hero {
-					margin-top: 150px; /* Increase top margin to accommodate larger navigation */
-					padding: 30px; /* Add more padding */
-				}
+            #chart-container, #table-container, #analysis {
+                width: 90%;
+            }
 
-				.hero h1 {
-					font-size: 2.5rem; /* Larger font for tablets */
-				}
+            table th, table td {
+                font-size: 0.9rem;
+            }
 
-				.hero h2 {
-					font-size: 2rem;
-				}
-			}
+            .nav-menu li a {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="toggle-nav">
+        <a href="./index.html">
+            <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo">
+        </a>
+        <button class="toggle-menu" aria-label="Toggle Menu">☰</button>
+        <ul class="nav-menu">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./group_analysis.html">Customer Group Analysis</a></li>
+            <li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
+            <li><a href="./customer_satisfaction_by_region.html">Satisfaction by Region</a></li>
+            <li><a href="./pivot_table_subscription_plan.html">Subscription Plan</a></li>
+            <li><a href="./late_payments_by_region.html">Late Payments</a></li>
+            <li><a href="./feedback_distribution.html">Feedback Distribution</a></li>
+            <li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
+        </ul>
+    </nav>
 
-			/* Mobile styles */
-			@media (max-width: 767px) {
-				.toggle-nav .toggle-menu {
-					display: block; /* Show the toggle menu button on mobile */
-				}
+    <!-- Main Content -->
+    <h1 class="Distribution">Feedback Distribution</h1>
 
-				.toggle-nav ul {
-					flex-direction: column; /* Stack menu items vertically */
-					align-items: center;
-					background-color: #f4d03f;
-					position: absolute;
-					top: 60px;
-					right: 0;
-					width: 100%;
-					display: none; /* Initially hidden */
-					box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-					margin-bottom: 0;
+    <!-- Pie Chart -->
+    <div id="chart-container">
+        <h2>Pie Chart: Feedback Categories</h2>
+        <canvas id="pieChart"></canvas>
+    </div>
 
-					transition: margin-bottom 0.3s ease; /* Smooth transition */
-				}
-				.toggle-nav ul.show {
-					display: flex; /* Show the menu when the 'show' class is added */
-				}
+    <!-- Table -->
+    <div id="table-container">
+        <h2>Table: Feedback Categories</h2>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Feedback Category</th>
+                    <th>Number of Feedbacks</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-				.toggle-nav ul li {
-					margin: 10px 0; /* Add spacing between items */
-				}
+    <!-- Analysis Section -->
+    <div id="analysis">
+        <h2>Conclusion</h2>
+        <p>The data shows that the majority of feedback is related to "Service Reliability," indicating it is a primary concern for customers.</p>
 
-				.toggle-nav ul li a {
-					font-size: 18px;
-				}
-				.toggle-nav ul.show {
-					display: flex; /* Show the menu when toggled */
-					margin-bottom: 500px; /* Add margin when the menu is visible */
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<nav class="toggle-nav">
-			<a href="./index.html"
-				><img
-					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
-					alt="Sun King Logo"
-			/></a>
-			<button class="toggle-menu" aria-label="Toggle Menu">☰</button>
-			<ul class="nav-menu">
-				<li><a href="./index.html">Home</a></li>
-				<li><a href="./group_analysis.html">Customer Group Analysis</a></li>
-				<li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
-				<li>
-					<a href="./customer_satisfaction_by_region.html"
-						>Satisfaction by Region</a
-					>
-				</li>
-				<li>
-					<a href="./pivot_table_subscription_plan.html">Subscription Plan</a>
-				</li>
-				<li><a href="./late_payments_by_region.html">Late Payments</a></li>
-				<li>
-					<a href="./feedback_distribution.html">Feedback Distribution</a>
-				</li>
-				<li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
-			</ul>
-		</nav>
+        <h2>Recommendations</h2>
+        <p>1. Improve Service Reliability: Address issues promptly and consistently.</p>
+        <p>2. Address Payment Challenges: Simplify payment processes and support customers effectively.</p>
+        <p>3. Enhance Agent Training: Equip agents to better handle customer concerns.</p>
+        <p>4. Monitor Feedback: Regularly review and act on feedback to address emerging trends.</p>
+    </div>
 
-		<h1 class="Distribution">Feedback Distribution</h1>
+    <!-- Footer -->
+    <footer style="background-color: #f4d03f; padding: 20px 0; text-align: center;">
+        <a href="./index.html">
+            <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo" style="height: 50px;">
+        </a>
+        <p>&copy; 2024 Sun King. All rights reserved. | <a href="#" style="text-decoration: underline;">Privacy Policy</a></p>
+    </footer>
 
-		<!-- Pie Chart -->
-		<div id="chart-container">
-			<h2>Pie Chart: Feedback Categories</h2>
-			<canvas id="pieChart" width="600" height="400"></canvas>
-		</div>
+    <script>
+        // Feedback Data
+        const feedbackCategories = {
+            "Service Reliability": 120,
+            "Payment Challenges": 80,
+            "Agent Support": 50,
+        };
 
-		<!-- Table -->
-		<div id="table-container">
-			<h2>Table: Feedback Categories</h2>
-			<table id="data-table">
-				<thead>
-					<tr>
-						<th>Feedback Category</th>
-						<th>Number of Feedbacks</th>
-					</tr>
-				</thead>
-				<tbody>
-					<!-- Table rows will be dynamically generated -->
-				</tbody>
-			</table>
-		</div>
+        // Generate Pie Chart
+        const pieChartCtx = document.getElementById("pieChart").getContext("2d");
+        new Chart(pieChartCtx, {
+            type: "pie",
+            data: {
+                labels: Object.keys(feedbackCategories),
+                datasets: [{
+                    data: Object.values(feedbackCategories),
+                    backgroundColor: ["#36a2eb", "#ff6384", "#cc65fe"],
+                    borderColor: ["#1f78b4", "#e31a1c", "#6a3d9a"],
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top",
+                    },
+                },
+            },
+        });
 
-		<!-- Analysis Section -->
-		<div id="analysis">
-			<h2>Conclusion</h2>
-			<p>
-				The data shows that the majority of feedback is related to "Service
-				Reliability," indicating it is a primary concern for customers. "Payment
-				Challenges" and "Agent Support" also represent significant portions,
-				suggesting room for improvement in these areas.
-			</p>
+        // Populate Table
+        const tableBody = document.querySelector("#data-table tbody");
+        Object.entries(feedbackCategories).forEach(([category, count]) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${category}</td><td>${count}</td>`;
+            tableBody.appendChild(row);
+        });
 
-			<h2>Recommendations</h2>
-			<p>
-				1. Prioritize Service Reliability: Allocate resources to ensure
-				consistent service delivery and resolve any reliability issues promptly.
-			</p>
-			<p>
-				2. Address Payment Challenges: Simplify payment processes and provide
-				robust support for payment-related issues.
-			</p>
-			<p>
-				3. Enhance Agent Training: Offer additional training for customer
-				support agents to improve their effectiveness and responsiveness.
-			</p>
-			<p>
-				4. Continuous Monitoring: Regularly review feedback to identify emerging
-				trends and address them before they escalate.
-			</p>
-		</div>
+        // Navbar Toggle
+        const toggleButton = document.querySelector(".toggle-menu");
+        const navMenu = document.querySelector(".nav-menu");
 
-		<footer
-			style="
-				background-color: #f4d03f;
-				padding: 20px 0;
-				text-align: center;
-				color: #333;
-				font-family: Arial, sans-serif;
-				position: relative;
-				bottom: 0;
-				width: 100%;
-				box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
-			"
-		>
-			<a href="./index.html">
-				<img
-					src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png"
-					alt="Sun King Logo"
-					style="height: 50px; width: auto"
-				/>
-			</a>
-			<p style="margin-top: 10px; font-size: 14px">
-				&copy; 2024 Sun King. All rights reserved. |
-				<a
-					href="./privacy-policy.html"
-					style="color: #333; text-decoration: underline"
-					>Privacy Policy</a
-				>
-			</p>
-		</footer>
-
-		<script>
-			// Mock data: Distribution of feedback into categories
-			const feedbackCategories = {
-				"Service Reliability": 120,
-				"Payment Challenges": 80,
-				"Agent Support": 50,
-			};
-
-			// Generate Pie Chart
-			const pieChartCtx = document.getElementById("pieChart").getContext("2d");
-			new Chart(pieChartCtx, {
-				type: "pie",
-				data: {
-					labels: Object.keys(feedbackCategories),
-					datasets: [
-						{
-							data: Object.values(feedbackCategories),
-							backgroundColor: ["#36a2eb", "#ff6384", "#cc65fe"],
-							borderColor: ["#1f78b4", "#e31a1c", "#6a3d9a"],
-							borderWidth: 1,
-						},
-					],
-				},
-				options: {
-					responsive: true,
-					plugins: {
-						legend: {
-							display: true,
-							position: "top",
-						},
-					},
-				},
-			});
-
-			// Populate Table
-			const tableBody = document.querySelector("#data-table tbody");
-			Object.entries(feedbackCategories).forEach(([category, count]) => {
-				const row = document.createElement("tr");
-				row.innerHTML = `
-        <td>${category}</td>
-        <td>${count}</td>
-      `;
-				tableBody.appendChild(row);
-			});
-
-
-			const toggleButton = document.querySelector(".toggle-nav .toggle-menu");
-			const navMenu = document.querySelector(".toggle-nav ul");
-			const heroSection = document.querySelector(".hero");
-
-			// Add a condition to check if the screen width is mobile
-			toggleButton.addEventListener("click", () => {
-				if (window.innerWidth <= 767) {
-					navMenu.classList.toggle("show"); // Toggle menu visibility
-					if (navMenu.classList.contains("show")) {
-						heroSection.style.marginTop = "500px"; // Push the hero section down
-					} else {
-						heroSection.style.marginTop = "100px"; // Reset to default
-					}
-				}
-			});
-		</script>
-	</body>
+        toggleButton.addEventListener("click", () => {
+            navMenu.classList.toggle("show");
+        });
+    </script>
+</body>
 </html>
