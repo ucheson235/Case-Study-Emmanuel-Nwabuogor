@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Average Customer Satisfaction Ratings Across Regions</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        #chart-container, #table-container {
+            margin: 30px auto;
+            width: 60%;
+            text-align: center;
+        }
+
+        canvas {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: rgba(255, 205, 86, 0.8);
+        }
+
+        #conclusion, #recommendation {
+            margin: 30px auto;
+            width: 60%;
+            text-align: left;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f4d03f;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer img {
+            height: 50px;
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: black;
+            text-decoration: underline;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f4d03f;
+            padding: 10px 1px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar img {
+            height: 50px;
+        }
+
+        .menu-button {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            margin: 0 15px;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu li a:hover {
+            background-color: black;
+            color: #f4d03f;
+            border-radius: 50px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1600px) {
+            #chart-container, #table-container, #conclusion, #recommendation {
+                width: 70%;
+            }
+            .nav-menu li a {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .menu-button {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #f4d03f;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu li {
+                margin: 10px 0;
+            }
+
+            #chart-container, #table-container, #conclusion, #recommendation {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            th, td {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="./index.html">
+            <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo">
+        </a>
+        <button class="menu-button" id="menu-button">☰</button>
+        <ul class="nav-menu">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./group_analysis.html">Customer Group Analysis</a></li>
+            <li><a href="./Line_Graph.html">Line Graph</a></li>
+            <li><a href="./Bar_Chart.html">Bar-Chart</a></li>
+            <li><a href="./pivot_table_subscription_plan.html">Pivot-Table</a></li>
+            <li><a href="./late_payments_by_region.html">Late Payments</a></li>
+            <li><a href="./P_chart.html">Pie-Chart</a></li>
+            <li><a href="./Column_Chart.html">Column-Chart</a></li>
+            <li><a href="./working.html">Working</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Average Customer Satisfaction Ratings Across Regions</h1>
+
+        <!-- Chart -->
+        <div id="chart-container">
+            <h2>Bar Chart: Satisfaction Ratings</h2>
+            <canvas id="satisfactionChart"></canvas>
+        </div>
+
+        <!-- Table -->
+        <div id="table-container">
+            <h2>Pivot Table: Average Ratings by Region</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th>Average Satisfaction Rating</th>
+                    </tr>
+                </thead>
+                <tbody id="pivot-table-body"></tbody>
+            </table>
+        </div>
+
+        <!-- Conclusion -->
+        <div id="conclusion">
+            <h2>Conclusion</h2>
+            <p>The analysis reveals that:</p>
+            <ul>
+                <li><strong>Urban</strong> regions have the highest average satisfaction rating at <strong>8.5</strong>.</li>
+                <li><strong>Semi-Urban</strong> regions follow with an average rating of <strong>7.0</strong>.</li>
+                <li><strong>Rural</strong> regions have the lowest satisfaction rating at <strong>6.0</strong>.</li>
+            </ul>
+        </div>
+
+        <!-- Recommendation -->
+        <div id="recommendation">
+            <h2>Recommendations</h2>
+            <ul>
+                <li><strong>Urban:</strong> Maintain excellent service by regularly engaging with customers and addressing minor issues proactively.</li>
+                <li><strong>Semi-Urban:</strong> Focus on improving accessibility and service delivery to boost satisfaction ratings further.</li>
+                <li><strong>Rural:</strong> Address service gaps by investing in infrastructure, outreach programs, and customer education to improve satisfaction.</li>
+                <li><strong>Monitoring:</strong> Regularly track satisfaction ratings across all regions to identify emerging trends and adjust strategies as needed.</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <a href="./index.html">
+            <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo">
+        </a>
+        <p>&copy; 2024 Sun King. All rights reserved. | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // Raw Data
+        const rawData = [
+            { id: "CUST-001", region: "Urban", rating: 9 },
+            { id: "CUST-002", region: "Urban", rating: 8 },
+            { id: "CUST-003", region: "Urban", rating: 8.5 },
+            { id: "CUST-004", region: "Semi-Urban", rating: 7 },
+            { id: "CUST-005", region: "Semi-Urban", rating: 7.5 },
+            { id: "CUST-006", region: "Semi-Urban", rating: 6.5 },
+            { id: "CUST-007", region: "Rural", rating: 6 },
+            { id: "CUST-008", region: "Rural", rating: 5.5 },
+            { id: "CUST-009", region: "Rural", rating: 6.5 }
+        ];
+
+        // Function to calculate average ratings by region
+        function calculateAverageRatings(data) {
+            const groupedRatings = data.reduce((acc, { region, rating }) => {
+                acc[region] = acc[region] || { total: 0, count: 0 };
+                acc[region].total += rating;
+                acc[region].count += 1;
+                return acc;
+            }, {});
+
+            return Object.keys(groupedRatings).reduce((averages, region) => {
+                averages[region] = (groupedRatings[region].total / groupedRatings[region].count).toFixed(1);
+                return averages;
+            }, {});
+        }
+
+        // Calculate averages
+        const averageRatings = calculateAverageRatings(rawData);
+
+        // Populate table
+        const pivotTableBody = document.getElementById("pivot-table-body");
+        Object.entries(averageRatings).forEach(([region, rating]) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${region}</td><td>${rating}</td>`;
+            pivotTableBody.appendChild(row);
+        });
+
+        // Create Chart
+        const ctx = document.getElementById("satisfactionChart").getContext("2d");
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: Object.keys(averageRatings),
+                datasets: [{
+                    label: "Average Satisfaction Rating",
+                    data: Object.values(averageRatings),
+                    backgroundColor: ["#36a2eb", "#ff6384", "#cc65fe"],
+                    borderColor: ["#1f78b4", "#e31a1c", "#6a3d9a"],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Average Satisfaction Rating"
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Regions"
+                        }
+                    }
+                }
+            }
+        });
+
+        // Toggle Navbar
+        const menuButton = document.getElementById("menu-button");
+        const navMenu = document.getElementById("nav-menu");
+
+        menuButton.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
+    </script>
+</body>
+</html>

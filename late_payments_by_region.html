@@ -4,34 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Total Late Payments by Region</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* General Styles */
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             margin: 0;
             padding: 0;
         }
 
         h1, h2 {
+            text-align: center;
+            margin: 20px 0;
             color: #333;
         }
 
-        .Region {
-            margin-top: 100px;
-        }
-
-        #chart-container, #table-container {
+        #data-container, #working-container, #conclusions-container, #recommendations-container {
             margin: 30px auto;
             width: 80%;
-            max-width: 600px;
-        }
-
-        canvas {
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 8px;
         }
 
         table {
@@ -42,61 +31,73 @@
 
         th, td {
             padding: 10px;
-            text-align: center;
             border: 1px solid #ddd;
+            text-align: center;
         }
 
         th {
             background-color: rgba(255, 205, 86, 0.8);
         }
 
-        #analysis {
-            max-width: 800px;
-            margin: 30px auto;
-            text-align: left;
-            font-size: 1rem;
+        td {
+            background-color: #f8f9fa;
         }
 
-        p {
+        footer {
+            background-color: #f4d03f;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer img {
+            height: 50px;
+        }
+
+        footer p {
             margin: 10px 0;
-            font-size: 1rem;
+            font-size: 14px;
         }
 
-        /* Navbar Styles */
-        .toggle-nav {
+        footer a {
+            color: black;
+            text-decoration: underline;
+        }
+
+        /* Navbar */
+        .navbar {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             background-color: #f4d03f;
             padding: 10px 1px;
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 10;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .toggle-nav img {
+        .navbar img {
             height: 50px;
         }
 
-        .toggle-menu {
+        .menu-button {
             display: none;
-            background: none;
-            border: none;
             font-size: 24px;
             cursor: pointer;
+            background: none;
+            border: none;
         }
 
         .nav-menu {
-            display: flex;
             list-style: none;
+            display: flex;
             margin: 0;
             padding: 0;
         }
 
         .nav-menu li {
-            margin: 0 10px;
+            margin: 0 15px;
         }
 
         .nav-menu li a {
@@ -104,49 +105,43 @@
             color: black;
             font-size: 16px;
             padding: 5px 10px;
-            border-radius: 50px;
             transition: all 0.3s ease;
         }
 
         .nav-menu li a:hover {
             background-color: black;
             color: #f4d03f;
+            border-radius: 50px;
         }
 
         /* Responsive Styles */
         @media (max-width: 1600px) {
-            #chart-container, #table-container {
-                width: 70%;
-            }
-
-            table, th, td {
-                font-size: 0.9rem;
+            #data-container, #working-container, #conclusions-container, #recommendations-container {
+                width: 90%;
             }
 
             .nav-menu li a {
                 font-size: 14px;
-                padding: 5px;
             }
         }
 
         @media (max-width: 900px) {
-            .toggle-menu {
+            .menu-button {
                 display: block;
             }
 
             .nav-menu {
+                display: none;
                 flex-direction: column;
-                align-items: center;
-                background-color: #f4d03f;
                 position: absolute;
                 top: 60px;
                 left: 0;
-                right: 0;
-                display: none;
-                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+                width: 100%;
+                background-color: #f4d03f;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
 
-            .nav-menu.show {
+            .nav-menu.active {
                 display: flex;
             }
 
@@ -154,169 +149,111 @@
                 margin: 10px 0;
             }
 
-            .nav-menu li a {
-                font-size: 16px;
-            }
-
-            .Region {
-                margin-top: 140px;
+            #data-container, #working-container, #conclusions-container, #recommendations-container {
+                width: 95%;
             }
         }
 
         @media (max-width: 767px) {
-            h1 {
+            h1, h2 {
                 font-size: 1.5rem;
             }
 
-            h2 {
-                font-size: 1.2rem;
-            }
-
-            p {
+            table th, table td {
                 font-size: 0.9rem;
+                padding: 8px;
             }
 
-            table, th, td {
-                font-size: 0.8rem;
-            }
-
-            #chart-container, #table-container {
-                width: 100%;
-                padding: 0 10px;
+            footer p {
+                font-size: 12px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="toggle-nav">
+    <nav class="navbar">
         <a href="./index.html">
             <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo">
         </a>
-        <button class="toggle-menu" aria-label="Toggle Menu">☰</button>
+        <button class="menu-button" id="menu-button">☰</button>
         <ul class="nav-menu">
             <li><a href="./index.html">Home</a></li>
             <li><a href="./group_analysis.html">Customer Group Analysis</a></li>
-            <li><a href="./satisfaction_trend.html">Satisfaction Ratings</a></li>
-            <li><a href="./customer_satisfaction_by_region.html">Satisfaction by Region</a></li>
-            <li><a href="./pivot_table_subscription_plan.html">Subscription Plan</a></li>
+            <li><a href="./Line_Graph.html">Line Graph</a></li>
+            <li><a href="./Bar_Chart.html">Bar-Chart</a></li>
+            <li><a href="./pivot_table_subscription_plan.html">Pivot-Table</a></li>
             <li><a href="./late_payments_by_region.html">Late Payments</a></li>
-            <li><a href="./feedback_distribution.html">Feedback Distribution</a></li>
-            <li><a href="./ratings_distribution.html">Ratings Distribution</a></li>
+            <li><a href="./P_chart.html">Pie-Chart</a></li>
+            <li><a href="./Column_Chart.html">Column-Chart</a></li>
+            <li><a href="./working.html">Working</a></li>
         </ul>
     </nav>
 
-    <!-- Main Content -->
-    <h1 class="Region">Total Late Payments by Region (Last 6 Months)</h1>
+    <main>
+        <h1>Total Late Payments by Region (Last Six Months)</h1>
+        <div id="data-container">
+            <table id="late-payments-table">
+                <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th>Total Late Payments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rural</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        <td>Semi-Urban</td>
+                        <td>19</td>
+                    </tr>
+                    <tr>
+                        <td>Urban</td>
+                        <td>13</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Bar Chart -->
-    <div id="chart-container">
-        <h2>Bar Chart: Late Payments by Region</h2>
-        <canvas id="barChart"></canvas>
-    </div>
+        <div id="working-container">
+            <h2>Working</h2>
+            <p>The raw data was processed to identify late payments by comparing the actual payment date with the expected payment date. Only payments made in the last six months were included in this analysis.</p>
+        </div>
 
-    <!-- Table -->
-    <div id="table-container">
-        <h2>Table: Late Payments by Region</h2>
-        <table id="data-table">
-            <thead>
-                <tr>
-                    <th>Region</th>
-                    <th>Total Late Payments</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+        <div id="conclusions-container">
+            <h2>Conclusions</h2>
+            <ul>
+                <li><strong>Semi-Urban:</strong> Highest late payments suggest a need for better engagement and follow-up.</li>
+                <li><strong>Urban and Rural:</strong> Equal late payments indicate possible systemic issues in these areas.</li>
+            </ul>
+        </div>
 
-    <!-- Analysis Section -->
-    <div id="analysis">
-        <h2>Conclusion</h2>
-        <p>
-            The data reveals that Rural regions have the highest number of late
-            payments, followed by Urban regions, with Semi-Urban regions showing the
-            lowest number. This trend suggests that customers in Rural areas face
-            more challenges in meeting payment deadlines, potentially due to service
-            accessibility or financial constraints.
-        </p>
+        <div id="recommendations-container">
+            <h2>Recommendations</h2>
+            <ul>
+                <li>Implement automated reminders to reduce late payments in Semi-Urban areas.</li>
+                <li>Analyze Urban and Rural areas for specific barriers causing late payments.</li>
+                <li>Leverage strategies from successful regions to improve outcomes in high-late-payment areas.</li>
+            </ul>
+        </div>
+    </main>
 
-        <h2>Recommendations</h2>
-        <p>1. Provide personalized reminders, payment flexibility, or incentives to encourage on-time payments in Rural regions.</p>
-        <p>2. Launch financial education campaigns in regions with high late payments to improve awareness.</p>
-        <p>3. Ensure Rural regions have easy access to payment platforms, such as mobile apps or nearby agents.</p>
-        <p>4. Maintain proactive support and incentives for Urban regions to further reduce late payments.</p>
-    </div>
-
-    <!-- Footer -->
-    <footer style="background-color: #f4d03f; padding: 20px 0; text-align: center;">
+    <footer>
         <a href="./index.html">
-            <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo" style="height: 50px;">
+            <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo">
         </a>
-        <p>&copy; 2024 Sun King. All rights reserved. | <a href="#" style="text-decoration: underline;">Privacy Policy</a></p>
+        <p>&copy; 2024 Sun King. All rights reserved. | <a href="#">Privacy Policy</a></p>
     </footer>
 
     <script>
-        // Mock data: Total late payments per region in the last 6 months
-        const latePaymentsByRegion = {
-            Urban: 120,
-            "Semi-Urban": 95,
-            Rural: 140,
-        };
+        // Navbar Toggle
+        const menuButton = document.getElementById("menu-button");
+        const navMenu = document.getElementById("nav-menu");
 
-        // Generate Bar Chart
-        const barChartCtx = document.getElementById("barChart").getContext("2d");
-        new Chart(barChartCtx, {
-            type: "bar",
-            data: {
-                labels: Object.keys(latePaymentsByRegion),
-                datasets: [{
-                    label: "Total Late Payments",
-                    data: Object.values(latePaymentsByRegion),
-                    backgroundColor: ["#36a2eb", "#ff6384", "#cc65fe"],
-                    borderColor: ["#1f78b4", "#e31a1c", "#6a3d9a"],
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: "top",
-                    },
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: "Regions"
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: "Total Late Payments"
-                        }
-                    }
-                }
-            }
-        });
-
-        // Populate Table
-        const tableBody = document.querySelector("#data-table tbody");
-        Object.entries(latePaymentsByRegion).forEach(([region, payments]) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `<td>${region}</td><td>${payments}</td>`;
-            tableBody.appendChild(row);
-        });
-
-        // Navbar Toggle for Mobile
-        const toggleButton = document.querySelector(".toggle-menu");
-        const navMenu = document.querySelector(".nav-menu");
-
-        toggleButton.addEventListener("click", () => {
-            navMenu.classList.toggle("show");
+        menuButton.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
         });
     </script>
 </body>

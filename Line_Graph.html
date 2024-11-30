@@ -3,49 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pivot Table: Satisfaction Ratings by Subscription Plan</title>
+    <title>Satisfaction Ratings vs. Late Payments</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* General Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            line-height: 1.6;
         }
 
         h1, h2 {
             text-align: center;
-            margin: 20px 0;
             color: #333;
         }
 
-        #pivot-table-container, #working-container, #conclusions-container, #recommendations-container {
+        #chart-container {
+            margin: 30px auto;
+            width: 50%;
+            text-align: center;
+        }
+
+        canvas {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        #conclusion, #recommendation {
             margin: 30px auto;
             width: 80%;
-        }
-
-        #pivot-table-container {
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            padding: 10px;
+            padding: 20px;
             border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        th {
-            background-color: rgba(255, 205, 86, 0.8);
-        }
-
-        td {
+            border-radius: 8px;
             background-color: #f8f9fa;
+        }
+
+        #conclusion ul, #recommendation ul {
+            margin: 10px 0;
+            padding-left: 20px;
         }
 
         footer {
@@ -121,10 +117,9 @@
 
         /* Responsive Styles */
         @media (max-width: 1600px) {
-            #pivot-table-container, #working-container, #conclusions-container, #recommendations-container {
+            #chart-container, #conclusion, #recommendation {
                 width: 90%;
             }
-
             .nav-menu li a {
                 font-size: 14px;
             }
@@ -154,19 +149,18 @@
                 margin: 10px 0;
             }
 
-            #pivot-table-container, #working-container, #conclusions-container, #recommendations-container {
+            #chart-container, #conclusion, #recommendation {
                 width: 95%;
             }
         }
 
         @media (max-width: 767px) {
-            h1, h2 {
+            h1 {
                 font-size: 1.5rem;
             }
 
-            table th, table td {
-                font-size: 0.9rem;
-                padding: 8px;
+            h2 {
+                font-size: 1.2rem;
             }
 
             footer p {
@@ -196,41 +190,26 @@
     </nav>
 
     <main>
-        <h1>Pivot Table: Satisfaction Ratings by Subscription Plan</h1>
-        <div id="pivot-table-container">
-            <table id="pivot-table">
-                <thead>
-                    <tr>
-                        <th>Region</th>
-                        <th>Basic</th>
-                        <th>Standard</th>
-                        <th>Premium</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+        <h1>Satisfaction Ratings vs. Late Payments</h1>
+        <div id="chart-container">
+            <h2>Line Graph: Satisfaction Ratings and Late Payments</h2>
+            <canvas id="trendChart"></canvas>
         </div>
 
-        <div id="working-container">
-            <h2>Working</h2>
-            <p>The raw data is based on customer feedback grouped by region and subscription plan. The average satisfaction rating for each combination was calculated by summing the ratings and dividing by the count of customers in that group.</p>
-        </div>
-
-        <div id="conclusions-container">
-            <h2>Conclusions</h2>
+        <div id="conclusion">
+            <h2>Conclusion</h2>
             <ul>
-                <li><strong>Urban:</strong> High satisfaction across all plans, especially the Standard plan.</li>
-                <li><strong>Semi-Urban:</strong> Moderate satisfaction, but the Premium plan shows lower ratings.</li>
-                <li><strong>Rural:</strong> Low satisfaction, with Standard and Premium plans needing attention.</li>
+                <li>As the number of late payments increases, satisfaction ratings tend to decrease.</li>
+                <li>Customers with 3 or more late payments have significantly lower satisfaction ratings.</li>
             </ul>
         </div>
 
-        <div id="recommendations-container">
+        <div id="recommendation">
             <h2>Recommendations</h2>
             <ul>
-                <li>Focus on improving the Premium plan experience in Semi-Urban and Rural regions.</li>
-                <li>Conduct surveys to identify specific pain points for customers on the Standard and Premium plans in Rural areas.</li>
-                <li>Leverage success strategies from Urban regions to boost satisfaction in Semi-Urban and Rural areas.</li>
+                <li>Implement payment reminders to reduce late payments and improve satisfaction.</li>
+                <li>Provide personalized support for customers with frequent late payments to retain them.</li>
+                <li>Analyze root causes of late payments and address barriers such as payment flexibility.</li>
             </ul>
         </div>
     </main>
@@ -245,54 +224,86 @@
     <script>
         // Raw Data
         const rawData = [
-            { id: "CUST-001", region: "Urban", plan: "Basic", rating: 8 },
-            { id: "CUST-002", region: "Urban", plan: "Standard", rating: 9 },
-            { id: "CUST-003", region: "Urban", plan: "Premium", rating: 8.5 },
-            { id: "CUST-004", region: "Semi-Urban", plan: "Basic", rating: 7 },
-            { id: "CUST-005", region: "Semi-Urban", plan: "Standard", rating: 7.5 },
-            { id: "CUST-006", region: "Semi-Urban", plan: "Premium", rating: 6.5 },
-            { id: "CUST-007", region: "Rural", plan: "Basic", rating: 6 },
-            { id: "CUST-008", region: "Rural", plan: "Standard", rating: 5.5 },
-            { id: "CUST-009", region: "Rural", plan: "Premium", rating: 6.5 }
+            { id: "CUST-001", satisfaction: 9, latePayments: 0 },
+            { id: "CUST-002", satisfaction: 8, latePayments: 1 },
+            { id: "CUST-003", satisfaction: 8.5, latePayments: 0 },
+            { id: "CUST-004", satisfaction: 7, latePayments: 2 },
+            { id: "CUST-005", satisfaction: 7.5, latePayments: 1 },
+            { id: "CUST-006", satisfaction: 6.5, latePayments: 3 },
+            { id: "CUST-007", satisfaction: 6, latePayments: 2 },
+            { id: "CUST-008", satisfaction: 5.5, latePayments: 4 },
+            { id: "CUST-009", satisfaction: 6.5, latePayments: 1 }
         ];
 
-        // Function to calculate average satisfaction by region and plan
-        function calculatePivotTable(data) {
-            const regions = ["Urban", "Semi-Urban", "Rural"];
-            const plans = ["Basic", "Standard", "Premium"];
+        // Function to group data by late payments
+        function groupDataByLatePayments(data) {
+            const groupedData = data.reduce((acc, { satisfaction, latePayments }) => {
+                acc[latePayments] = acc[latePayments] || [];
+                acc[latePayments].push(satisfaction);
+                return acc;
+            }, {});
 
-            const pivot = regions.map(region => {
-                const row = { region };
-                plans.forEach(plan => {
-                    const filtered = data.filter(d => d.region === region && d.plan === plan);
-                    const avgRating = filtered.length
-                        ? (filtered.reduce((sum, d) => sum + d.rating, 0) / filtered.length).toFixed(1)
-                        : "N/A";
-                    row[plan] = avgRating;
-                });
-                return row;
+            // Calculate average satisfaction for each late payment group
+            return Object.keys(groupedData).map(latePayments => {
+                const ratings = groupedData[latePayments];
+                const avgSatisfaction =
+                    ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+                return { latePayments: parseInt(latePayments), avgSatisfaction };
             });
-
-            return pivot;
         }
 
-        // Generate Pivot Table
-        const pivotData = calculatePivotTable(rawData);
+        // Processed Data
+        const processedData = groupDataByLatePayments(rawData);
 
-        // Populate Table
-        const pivotTableBody = document.querySelector("#pivot-table tbody");
-        pivotData.forEach(row => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td>${row.region}</td>
-                <td>${row.Basic}</td>
-                <td>${row.Standard}</td>
-                <td>${row.Premium}</td>
-            `;
-            pivotTableBody.appendChild(tr);
+        // Extract Data for the Chart
+        const latePaymentsLabels = processedData.map(data => data.latePayments);
+        const avgSatisfactionValues = processedData.map(data => data.avgSatisfaction);
+
+        // Create Line Chart
+        const ctx = document.getElementById("trendChart").getContext("2d");
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: latePaymentsLabels,
+                datasets: [
+                    {
+                        label: "Average Satisfaction Rating",
+                        data: avgSatisfactionValues,
+                        borderColor: "#36a2eb",
+                        backgroundColor: "rgba(54, 162, 235, 0.2)",
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top"
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Number of Late Payments"
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Average Satisfaction Rating"
+                        }
+                    }
+                }
+            }
         });
 
-        // Navbar Toggle
+        // Toggle Navbar
         const menuButton = document.getElementById("menu-button");
         const navMenu = document.getElementById("nav-menu");
 
