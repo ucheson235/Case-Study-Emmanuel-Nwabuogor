@@ -176,7 +176,7 @@
             <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo">
         </a>
         <button class="menu-button" id="menu-button">☰</button>
-        <ul class="nav-menu">
+        <ul class="nav-menu" id="nav-menu">
             <li><a href="./index.html">Home</a></li>
             <li><a href="./group_analysis.html">Customer Group Analysis</a></li>
             <li><a href="./Line_Graph.html">Line Graph</a></li>
@@ -234,6 +234,14 @@
             { id: "CUST-008", satisfaction: 5.5, latePayments: 4 },
             { id: "CUST-009", satisfaction: 6.5, latePayments: 1 }
         ];
+
+        // Toggle Navbar
+        const menuButton = document.getElementById("menu-button");
+        const navMenu = document.getElementById("nav-menu");
+
+        menuButton.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
 
         // Function to group data by late payments
         function groupDataByLatePayments(data) {
@@ -301,14 +309,6 @@
                     }
                 }
             }
-        });
-
-        // Toggle Navbar
-        const menuButton = document.getElementById("menu-button");
-        const navMenu = document.getElementById("nav-menu");
-
-        menuButton.addEventListener("click", () => {
-            navMenu.classList.toggle("active");
         });
     </script>
 </body>

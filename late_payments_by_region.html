@@ -12,6 +12,10 @@
             padding: 0;
         }
 
+        .Total{
+            margin-top: 120px;
+        }
+
         h1, h2 {
             text-align: center;
             margin: 20px 0;
@@ -177,7 +181,7 @@
             <img src="https://sunking.com/wp-content/uploads/2017/12/Sun-King-Logo-1.png" alt="Sun King Logo">
         </a>
         <button class="menu-button" id="menu-button">☰</button>
-        <ul class="nav-menu">
+        <ul class="nav-menu" id="nav-menu">
             <li><a href="./index.html">Home</a></li>
             <li><a href="./group_analysis.html">Customer Group Analysis</a></li>
             <li><a href="./Line_Graph.html">Line Graph</a></li>
@@ -191,7 +195,7 @@
     </nav>
 
     <main>
-        <h1>Total Late Payments by Region (Last Six Months)</h1>
+        <h1 class="Total">Total Late Payments by Region (Last Six Months)</h1>
         <div id="data-container">
             <table id="late-payments-table">
                 <thead>

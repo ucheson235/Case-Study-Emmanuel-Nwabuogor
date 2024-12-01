@@ -187,7 +187,7 @@
             <span></span>
             <span></span>
         </div>
-        <ul class="nav-menu">
+        <ul class="nav-menu" id="nav-menu">
             <li><a href="./index.html">Home</a></li>
             <li><a href="./group_analysis.html">Customer Group Analysis</a></li>
             <li><a href="./Line_Graph.html">Line Graph</a></li>
@@ -239,16 +239,13 @@
         <p>&copy; 2024 Sun King. All rights reserved. | <a href="#">Privacy Policy</a></p>
     </footer>
     <script>
-        // toggle
-
-       const toggleBtn = document.getElementById("toggle-btn");
+        const toggleBtn = document.getElementById("toggle-btn");
         const navMenu = document.getElementById("nav-menu");
 
         toggleBtn.addEventListener("click", () => {
             navMenu.classList.toggle("active");
         });
 
-        // rewdata
         const rawData = [
             { id: "CUST-001", rating: 8, paymentDates: ["2023-10-01"], expectedDates: ["2023-10-05"] },
             { id: "CUST-002", rating: 6, paymentDates: ["2023-10-03"], expectedDates: ["2023-10-03"] },
